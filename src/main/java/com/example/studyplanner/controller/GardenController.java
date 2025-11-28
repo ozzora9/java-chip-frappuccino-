@@ -1,6 +1,8 @@
 package com.example.studyplanner.controller;
 
 import com.example.studyplanner.PopupHelper;
+import com.example.studyplanner.manager.FlowerManager;
+import com.example.studyplanner.model.Flower;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,12 +51,20 @@ public class GardenController implements Initializable {
         inventoryPanel.setTranslateY(300);
         inventoryPanel.setVisible(false);
 
-        // 테스트용 더미 데이터 로드
-        loadDummyInventory();
+        loadInventoryFromDB();
 
         // 정원 드래그 앤 드롭 설정
         setupGardenDragAndDrop();
     }
+
+    private void loadInventoryFromDB() {
+        flowerFlowPane.getChildren().clear();
+
+        for (Flower f : FlowerManager.getInstance().getCatalog()) {
+            flowerFlowPane.getChildren().add(createFlowerCard(f));
+        }
+    }
+
 
     // =========================================================================
     // ★ [수정됨] 1. 씨앗 성장률 버튼 클릭 (이미지 팝업 기능 추가)
@@ -100,7 +110,6 @@ public class GardenController implements Initializable {
 
         // 이미지 로드 및 설정
         try {
-            // 경로: /com/example/studyplanner/images/rose/파일명
             String fullPath = "/com/example/studyplanner/images/" + imgName;
             Image image = new Image(getClass().getResource(fullPath).toExternalForm());
 
@@ -169,29 +178,32 @@ public class GardenController implements Initializable {
         gardenArea.getChildren().add(newFlower);
     }
 
-    private void loadDummyInventory() {
-        // 이미지 경로 수정: @images/rose.jpg -> flower_rose.png 등으로 실제 파일명에 맞게 사용 필요
-        // 예시로 기존 로직 유지
-        flowerFlowPane.getChildren().add(createFlowerCard("장미", "flower_rose.png", 5));
-        flowerFlowPane.getChildren().add(createFlowerCard("튤립", "flower_tulip.png", 3));
-        flowerFlowPane.getChildren().add(createFlowerCard("해바라기", "flower_sunflower.png", 8));
-        flowerFlowPane.getChildren().add(createFlowerCard("장미", "flower_rose.png", 2));
-    }
+//    private void loadDummyInventory() {
+//        // 이미지 경로 수정: @images/rose.jpg -> flower_rose.png 등으로 실제 파일명에 맞게 사용 필요
+//        // 예시로 기존 로직 유지
+//        flowerFlowPane.getChildren().add(createFlowerCard("장미", "flower_rose.png", 5));
+//        flowerFlowPane.getChildren().add(createFlowerCard("튤립", "flower_tulip.png", 3));
+//        flowerFlowPane.getChildren().add(createFlowerCard("해바라기", "flower_sunflower.png", 8));
+//        flowerFlowPane.getChildren().add(createFlowerCard("장미", "flower_rose.png", 2));
+//    }
 
-    private StackPane createFlowerCard(String name, String imageName, int count) {
+    private StackPane createFlowerCard(Flower f) {
         VBox cardLayout = new VBox(10);
         cardLayout.getStyleClass().add("flower-card");
         cardLayout.setAlignment(Pos.CENTER);
 
         ImageView flowerImg = new ImageView();
         try {
-            flowerImg.setImage(new Image(getClass().getResource("/com/example/studyplanner/images/" + imageName).toExternalForm()));
+            flowerImg.setImage(new Image(
+                    getClass().getResource(f.getImagePath())
+                            .toExternalForm()
+            ));
         } catch (Exception e) { }
         flowerImg.setFitHeight(80);
         flowerImg.setFitWidth(80);
         flowerImg.setPreserveRatio(true);
 
-        Label nameLbl = new Label(name + " (x" + count + ")");
+        Label nameLbl = new Label(f.getName() + " (x" + f.getQuantity() + ")");
         nameLbl.getStyleClass().add("flower-name");
 
         cardLayout.getChildren().addAll(flowerImg, nameLbl);
@@ -204,12 +216,12 @@ public class GardenController implements Initializable {
 
         Button placeBtn = createActionButton("btn_place.png", "정원에 배치하기");
         placeBtn.setOnAction(e -> {
-            handlePlaceFlower(name);
+            handlePlaceFlower(f.getName());
             handleToggleInventory(null);
         });
 
         Button mergeBtn = createActionButton("btn_merge.png", "같은 꽃 3개 모으기 (합성)");
-        mergeBtn.setOnAction(e -> handleMergeFlowers(name));
+        mergeBtn.setOnAction(e -> handleMergeFlowers(f.getName()));
 
         actionsBox.getChildren().addAll(placeBtn, mergeBtn);
 
@@ -219,7 +231,7 @@ public class GardenController implements Initializable {
         finalCard.setOnDragDetected(event -> {
             Dragboard db = finalCard.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putString(imageName);
+            content.putString(f.getImagePath());
             db.setDragView(flowerImg.getImage());
             db.setContent(content);
             event.consume();

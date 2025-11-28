@@ -1,5 +1,6 @@
 package com.example.studyplanner.controller;
 
+import com.example.studyplanner.manager.FlowerManager;
 import com.example.studyplanner.model.Flower;
 import com.example.studyplanner.service.DataStore;
 import javafx.event.ActionEvent;
@@ -35,8 +36,7 @@ public class CollectionController {
     private void renderItemGrid() {
         itemGrid.getChildren().clear();
 
-        for (Flower f : DataStore.allFlowers) {
-
+        for (Flower f : FlowerManager.getInstance().getCatalog()) {
             // 슬롯 배경
             ImageView slotBg = new ImageView(
                     new Image(Objects.requireNonNull(getClass().getResource(

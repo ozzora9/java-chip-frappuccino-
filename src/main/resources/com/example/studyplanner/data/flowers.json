@@ -7,8 +7,7 @@
     "seedIcon": "/com/example/studyplanner/images/flowers/rose/seed.png",
     "sproutIcon": "/com/example/studyplanner/images/flowers/rose/sprout.png",
     "growIcon": "/com/example/studyplanner/images/flowers/rose/grow.png",
-    "bloomIcon": "/com/example/studyplanner/images/flowers/rose/bloom.png",
-    "unlocked": true
+    "bloomIcon": "/com/example/studyplanner/images/flowers/rose/bloom.png"
   },
   {
     "id": 2,
@@ -18,8 +17,7 @@
     "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/seed.png",
     "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sprout.png",
     "growIcon": "/com/example/studyplanner/images/flowers/sunflower/grow.png",
-    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png",
-    "unlocked": true
+    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png"
   },
   {
     "id": 3,
@@ -29,7 +27,6 @@
     "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/seed.png",
     "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sprout.png",
     "growIcon": "/com/example/studyplanner/images/flowers/sunflower/grow.png",
-    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png",
-    "unlocked": false
+    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png"
   }
 ]
