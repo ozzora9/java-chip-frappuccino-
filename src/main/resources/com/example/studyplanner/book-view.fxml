@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #4a3b32;" stylesheets="@planner.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.studyplanner.controller.BookController">
+
+
+    <ImageView fitHeight="650.0" fitWidth="950.0" pickOnBounds="true" translateY="30.0">
+        <image>
+            <Image url="@images/UI_TravelBook_BookCover01a.png" />
+        </image>
+        <effect>
+            <javafx.scene.effect.DropShadow color="#00000080" radius="15" spread="0.2" />
+        </effect>
+    </ImageView>
+
+
+    <HBox alignment="CENTER" spacing="0" translateY="30.0">
+
+        <StackPane>
+            <ImageView fitHeight="600.0" preserveRatio="true">
+                <image>
+                    <Image url="@images/UI_TravelBook_BookPageLeft01a.png" />
+                </image>
+            </ImageView>
+
+            <VBox alignment="CENTER" maxWidth="350" spacing="10">
+                <padding>
+                    <Insets bottom="40" left="20" right="20" top="80" />
+                </padding>
+                <Label text="페이지 내용 (왼쪽)" style="-fx-text-fill: #5c3a21; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            </VBox>
+        </StackPane>
+
+        <StackPane>
+            <ImageView fitHeight="600.0" preserveRatio="true">
+                <image>
+                    <Image url="@images/UI_TravelBook_BookPageRight01a.png" />
+                </image>
+            </ImageView>
+
+            <HBox alignment="CENTER" maxWidth="380" spacing="10">
+                <padding>
+                    <Insets bottom="30" left="30" right="40" top="60" />
+                </padding>
+                <Label text="페이지 내용 (오른쪽)" style="-fx-text-fill: #5c3a21; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            </HBox>
+        </StackPane>
+    </HBox>
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="8" translateX="-280.0" translateY="-290.0">
+        <Button contentDisplay="CENTER" onAction="#navGarden" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="정원" />
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navPlanner" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="플래너" />
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navTimer" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="타이머" />
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navBook" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="컬렉션" />
+                </StackPane>
+            </graphic>
+        </Button>
+    </HBox>
+
+</StackPane>

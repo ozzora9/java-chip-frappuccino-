@@ -1,0 +1,138 @@
+package com.example.studyplanner.controller;
+
+import com.example.studyplanner.model.Flower;
+import com.example.studyplanner.service.DataStore;
+import javafx.event.ActionEvent;
+import javafx.fxml.*;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+
+public class CollectionController {
+
+    @FXML private TilePane itemGrid;
+    @FXML private VBox detailContent;
+
+    @FXML
+    public void initialize() {
+        DataStore.loadFromJson();
+        renderItemGrid();
+    }
+
+    private void renderItemGrid() {
+        itemGrid.getChildren().clear();
+
+        for (Flower f : DataStore.allFlowers) {
+
+            // 슬롯 배경
+            ImageView slotBg = new ImageView(
+                    new Image(Objects.requireNonNull(getClass().getResource(
+                            "/com/example/studyplanner/images/UI_TravelBook_Slot01b.png")).toExternalForm())
+            );
+            slotBg.setFitWidth(72);
+            slotBg.setFitHeight(72);
+
+            // 꽃 이미지
+            ImageView img = new ImageView(
+                    new Image(getClass().getResource(f.getImagePath()).toExternalForm())
+            );
+
+            img.setFitWidth(48);
+            img.setFitHeight(48);
+
+            StackPane stack = new StackPane(slotBg, img);
+            stack.setAlignment(Pos.CENTER);
+
+            // 🔒 잠겨있다면 효과 적용
+            if (!f.isUnlocked()) {
+                ColorAdjust darken = new ColorAdjust();
+                darken.setBrightness(-0.6);
+                img.setEffect(darken);
+                img.setOpacity(0.4);
+
+                ImageView lock = new ImageView(
+                        new Image(Objects.requireNonNull(getClass().getResource(
+                                "/com/example/studyplanner/images/lock.png")).toExternalForm())
+                );
+                lock.setFitWidth(26);
+                lock.setFitHeight(26);
+                StackPane.setAlignment(lock, Pos.CENTER);
+                stack.getChildren().add(lock);
+            }
+
+            stack.setOnMouseClicked(ev -> showDetailCard(f));
+
+            itemGrid.getChildren().add(stack);
+        }
+    }
+
+
+    private void showDetailCard(Flower f) {
+        detailContent.getChildren().clear();
+
+        // 잠김 카드라면 → 간단한 잠김 UI 표시
+        if (!f.isUnlocked()) {
+            VBox lockedBox = new VBox(10);
+            lockedBox.setStyle("-fx-padding: 20;");
+            Label locked = new Label("아직 발견되지 않은 꽃입니다.");
+            locked.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+            lockedBox.getChildren().add(locked);
+            detailContent.getChildren().add(lockedBox);
+            return;
+        }
+
+        try {
+            // FlowerCard.fxml 로드
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/studyplanner/flower/FlowerCard.fxml")
+            );
+
+            Parent card = loader.load();
+
+            // 컨트롤러 연결
+            FlowerCardController controller = loader.getController();
+            controller.setData(f);
+
+            // 오른쪽 detailContent에 카드 표시
+            detailContent.getChildren().setAll(card);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML void navGarden(ActionEvent event) { switchScene(event, "garden-view.fxml"); }
+    @FXML void navPlanner(ActionEvent event) { switchScene(event, "planner-view.fxml"); }
+    @FXML void navTimer(ActionEvent event) { switchScene(event, "timer-view.fxml"); }
+    @FXML void navBook(ActionEvent event) { switchScene(event, "collection-view.fxml"); }
+
+    private void switchScene(ActionEvent event, String fxmlFileName) {
+        try {
+            URL fxmlUrl = getClass().getResource(fxmlFileName);
+            if (fxmlUrl == null) {
+                fxmlUrl = getClass().getResource("/com/example/studyplanner/" + fxmlFileName);
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 720));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

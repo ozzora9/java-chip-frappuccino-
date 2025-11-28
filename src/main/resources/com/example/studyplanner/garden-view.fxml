@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Tooltip?>
+
+<StackPane prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #4a3b32;" stylesheets="@planner.css"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.studyplanner.controller.GardenController">
+
+    <!-- ================================================================================== -->
+    <!-- [LAYER 1] 책 배경 (표지 및 속지) -->
+    <!-- ================================================================================== -->
+
+    <!-- 1-1. 책 표지 -->
+    <ImageView fitHeight="650.0" fitWidth="950.0" pickOnBounds="true" translateY="30.0" StackPane.alignment="CENTER">
+        <image>
+            <Image url="@images/UI_TravelBook_BookCover01a.png" />
+        </image>
+        <effect>
+            <DropShadow color="#00000080" radius="15" spread="0.2" />
+        </effect>
+    </ImageView>
+
+    <!-- 1-2. 펼쳐진 책 속지 (종이 질감 유지를 위해 배치) -->
+    <HBox alignment="CENTER" spacing="0" translateY="30.0" maxHeight="-Infinity" maxWidth="-Infinity">
+        <ImageView fitHeight="600.0" preserveRatio="true">
+            <image>
+                <Image url="@images/UI_TravelBook_BookPageLeft01a.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="600.0" preserveRatio="true">
+            <image>
+                <Image url="@images/UI_TravelBook_BookPageRight01a.png" />
+            </image>
+        </ImageView>
+    </HBox>
+
+    <!-- ================================================================================== -->
+    <!-- [LAYER 2] 정원 배경 및 메인 게임 영역 (책 전체를 덮음) -->
+    <!-- ================================================================================== -->
+
+    <StackPane maxHeight="520.0" maxWidth="780.0" translateY="20.0">
+        <!-- 2-1. 잔디 배경 (grass.png) : preserveRatio="false"로 꽉 채움 -->
+        <ImageView fitWidth="760.0" fitHeight="480.0" preserveRatio="false">
+            <image>
+                <Image url="@images/grass.png" />
+            </image>
+            <effect>
+                <!-- 책 위에 떠있는 느낌을 위해 약간의 그림자/투명도 조정 -->
+                <DropShadow color="#00000040" radius="5" />
+            </effect>
+        </ImageView>
+
+        <!-- 2-2. 꽃이 심어지는 실제 영역 (드래그 앤 드롭 타겟) -->
+        <AnchorPane fx:id="gardenArea" prefWidth="760.0" prefHeight="480.0" />
+
+        <!-- 2-3. 타이틀 라벨 (왼쪽 상단 배치) -->
+        <Label text="My Secret Garden" StackPane.alignment="TOP_LEFT">
+            <StackPane.margin>
+                <Insets top="20" left="30"/>
+            </StackPane.margin>
+            <style>
+                -fx-font-family: 'Georgia';
+                -fx-font-size: 24px;
+                -fx-font-weight: bold;
+                -fx-text-fill: #ffffff;
+                -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 2, 0, 0, 1);
+            </style>
+        </Label>
+    </StackPane>
+
+    <!-- ================================================================================== -->
+    <!-- [LAYER 3] UI 컨트롤 & 보관함 (Overlay) -->
+    <!-- ================================================================================== -->
+
+    <AnchorPane maxWidth="900" maxHeight="600" pickOnBounds="false">
+
+        <!-- 3-1. 우측 상단 기능 버튼들 (보관함 열기, 성장률 확인) -->
+        <HBox spacing="10" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="60.0">
+            <!--  성장률 버튼 (Play 아이콘 적용) -->
+            <Button fx:id="growthRateBtn" onAction="#handleGrowthRate"
+                    style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
+                <graphic>
+                    <!-- fitWidth를 조절하여 아이콘 크기를 맞추세요 (예: 50~60) -->
+                    <ImageView fitWidth="60.0" fitHeight="60.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/play.png" />
+                        </image>
+                        <effect>
+                            <!-- 그림자 효과로 입체감 주기 -->
+                            <DropShadow color="#00000060" radius="5" spread="0.1" offsetX="2" offsetY="2"/>
+                        </effect>
+                    </ImageView>
+                </graphic>
+
+                <tooltip>
+                    <Tooltip text="씨앗 성장률 확인" style="-fx-font-size: 12px;"/>
+                </tooltip>
+            </Button>
+
+            <!-- 보관함 버튼 -->
+            <Button fx:id="inventoryBtn" onAction="#handleToggleInventory"
+                    style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
+                <graphic>
+                    <!-- 박스 이미지 크기는 fitWidth/fitHeight로 조절하세요 (예: 60px) -->
+                    <ImageView fitWidth="60.0" fitHeight="60.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/box.png" />
+                        </image>
+                        <effect>
+                            <!-- 박스에 그림자 효과를 주어 입체감 살리기 -->
+                            <DropShadow color="#00000060" radius="5" spread="0.1" offsetX="2" offsetY="2"/>
+                        </effect>
+                    </ImageView>
+                </graphic>
+                <!-- 마우스 올렸을 때 설명이 나오도록 툴팁 추가 -->
+                <tooltip>
+                    <Tooltip text="보관함 열기" style="-fx-font-size: 12px;"/>
+                </tooltip>
+            </Button>
+        </HBox>
+
+        <!-- 3-2. 보관함 패널 (숨겨져 있다가 아래에서 올라옴) -->
+        <!-- MouseTransparent를 false로 해야 클릭 가능 -->
+        <VBox fx:id="inventoryPanel" alignment="TOP_CENTER" spacing="10"
+              maxWidth="500" maxHeight="250"
+              styleClass="inventory-panel"
+              AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
+
+            <Label text="Flower Storage" styleClass="inventory-title" />
+            <Label text="꽃을 드래그하여 정원에 심어보세요!" style="-fx-font-size: 11px; -fx-text-fill: #6d4c41;"/>
+
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 5;">
+                <content>
+                    <FlowPane fx:id="flowerFlowPane" hgap="15" vgap="15" alignment="CENTER"
+                              style="-fx-background-color: transparent;" />
+                </content>
+            </ScrollPane>
+        </VBox>
+
+    </AnchorPane>
+
+    <!-- ================================================================================== -->
+    <!-- [LAYER 4] 상단 네비게이션 탭 -->
+    <!-- ================================================================================== -->
+
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="8"
+          translateX="-280.0" translateY="-290.0">
+        <Button contentDisplay="CENTER" onAction="#navGarden" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="정원" />
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navPlanner" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="플래너" />
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navTimer" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="타이머" />
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navBook" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="컬렉션" />
+                </StackPane>
+            </graphic>
+        </Button>
+    </HBox>
+
+</StackPane>

@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "name": "장미",
+    "meaning": "사랑과 열정",
+    "imagePath": "/com/example/studyplanner/images/flowers/rose/block.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/rose/seed.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/rose/sprout.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/rose/grow.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/rose/bloom.png",
+    "unlocked": true
+  },
+  {
+    "id": 2,
+    "name": "해바라기",
+    "meaning": "존경과 희망",
+    "imagePath": "/com/example/studyplanner/images/flowers/sunflower/block.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/seed.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sprout.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/sunflower/grow.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png",
+    "unlocked": true
+  },
+  {
+    "id": 3,
+    "name": "라일락",
+    "meaning": "첫사랑의 기억",
+    "imagePath": "/com/example/studyplanner/images/flowers/sunflower/sunflower.jpg",
+    "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/seed.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sprout.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/sunflower/grow.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png",
+    "unlocked": false
+  }
+]

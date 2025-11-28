@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #4a3b32;" stylesheets="@planner.css"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.studyplanner.controller.TimerController">
+
+    <ImageView fitHeight="650.0" fitWidth="950.0" pickOnBounds="true" translateY="30.0">
+        <image>
+            <Image url="@images/UI_TravelBook_BookCover01a.png" />
+        </image>
+        <effect>
+            <javafx.scene.effect.DropShadow color="#00000080" radius="15" spread="0.2" />
+        </effect>
+    </ImageView>
+
+    <HBox alignment="CENTER" spacing="0"  translateY="30.0">
+
+        <StackPane>
+            <ImageView fitHeight="600.0" preserveRatio="true">
+                <image>
+                    <Image url="@images/UI_TravelBook_BookPageLeft01a.png" />
+                </image>
+            </ImageView>
+
+            <VBox alignment="CENTER" maxWidth="350" spacing="10">
+                <padding>
+                    <Insets bottom="40" left="20" right="20" top="80" />
+                </padding>
+
+                <Label text="Study Plan" styleClass="header-label" />
+
+                <VBox alignment="CENTER_LEFT" maxWidth="220" spacing="8">
+                    <Label text="Subject" styleClass="sub-header-label"/>
+                    <ComboBox fx:id="subjectComboBox" prefWidth="220.0" promptText="과목을 선택하세요" styleClass="book-combo-box"/>
+                </VBox>
+
+                <Button fx:id="setGoalButton" onAction="#handleSetGoalButton" text="Set Goal Time" prefWidth="220" prefHeight="35" styleClass="goal-button"/>
+
+                <VBox alignment="CENTER" spacing="5" prefWidth="240" prefHeight="70" styleClass="info-box">
+                    <Label text="Target Remaining" styleClass="sub-header-label" style="-fx-font-size: 12px;"/>
+                    <Label fx:id="remainingTimeLabel" text="목표 미설정" textFill="#4e342e">
+                        <font><Font name="Courier New Bold" size="22.0" /></font>
+                    </Label>
+                </VBox>
+
+                <Button fx:id="startStopButton" onAction="#handleStartStopButton" text="START" prefWidth="140" prefHeight="45" styleClass="action-button, start-state" />
+            </VBox>
+        </StackPane>
+
+        <StackPane>
+            <ImageView fitHeight="600.0" preserveRatio="true">
+                <image>
+                    <Image url="@images/UI_TravelBook_BookPageRight01a.png" />
+                </image>
+            </ImageView>
+
+            <VBox alignment="CENTER" maxWidth="380" spacing="10">
+                <padding>
+                    <Insets bottom="30" left="30" right="40" top="60" />
+                </padding>
+
+                <Label text="Focus Timer" styleClass="header-label" />
+
+                <StackPane>
+                    <Group>
+                        <Circle fill="#FDF5E6" radius="130.0" />
+                        <Group fx:id="arcGroup" />
+                        <Circle fill="WHITE" radius="90.0" />
+                    </Group>
+
+                    <VBox alignment="CENTER" spacing="5">
+                        <Label text="TOTAL TIME" styleClass="timer-text-small" style="-fx-text-fill: #a1887f;"/>
+                        <Label fx:id="timeDisplayLabel" text="00:00:00" styleClass="timer-text-large" />
+                        <Label fx:id="progressLabel" text="0%" styleClass="timer-text-small" style="-fx-text-fill: #8d6e63;">
+                            <font><Font name="System Bold" size="16.0" /></font>
+                        </Label>
+                    </VBox>
+                </StackPane>
+            </VBox>
+        </StackPane>
+    </HBox>
+
+    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="8"
+          translateX="-280.0" translateY="-290.0">
+
+        <Button contentDisplay="CENTER" onAction="#navGarden" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="정원"/>
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navPlanner" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="플래너"/>
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navTimer" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="타이머"/>
+                </StackPane>
+            </graphic>
+        </Button>
+        <Button contentDisplay="CENTER" onAction="#navBook" styleClass="pixel-tab-btn-top">
+            <graphic>
+                <StackPane>
+                    <ImageView fitHeight="45" fitWidth="55" preserveRatio="true">
+                        <image><Image url="@images/UI_TravelBook_Marker01a.png" /></image>
+                    </ImageView>
+                    <Label styleClass="pixel-tab-text" text="컬렉션"/>
+                </StackPane>
+            </graphic>
+        </Button>
+    </HBox>
+
+</StackPane>

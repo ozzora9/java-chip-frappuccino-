@@ -1,0 +1,863 @@
+.page { -fx-background-color: #EEFFCC; }
+
+.content { -fx-padding: 18; }
+
+/* 사이드 탭 */
+.side-tabs { -fx-padding: 18 6 18 12; }
+.tab-btn {
+  -fx-background-color: #ffffff;
+  -fx-text-fill: #6a6a6a;
+  -fx-background-radius: 10;
+  -fx-padding: 10 12;
+  -fx-pref-width: 70;
+}
+.tab-btn.selected {
+    -fx-background-color: #ffd7e1;
+    -fx-text-fill: #444;
+}
+
+/* 카드 */
+.card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 16;
+  -fx-padding: 14;
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+/* 텍스트 스타일 */
+.section-title { -fx-font-size: 15px; -fx-font-weight: bold; }
+.timer-big { -fx-font-size: 24px; -fx-font-family: 'Georgia'; -fx-text-fill: #5c3a21; }
+.hint { -fx-text-fill: #9a9a9a; -fx-font-size: 11px; }
+.dday { -fx-text-fill: #7a7a7a; -fx-font-size: 14px; }
+.rate { -fx-text-fill: #6A8DFF; -fx-font-weight: bold; }
+
+/* 버튼 */
+.primary {
+  -fx-background-color: #6A8DFF;
+  -fx-text-fill: white;
+  -fx-background-radius: 8;
+}
+.add-btn {
+    -fx-background-color: #8B4513;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-size: 10px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+.add-btn:hover { -fx-background-color: #a0522d; }
+
+/* 입력창 */
+.paper-input, .paper-input .content {
+    -fx-background-color: #f5e6d3;
+    -fx-border-color: transparent transparent #b08d74 transparent;
+    -fx-text-fill: #333333;
+}
+
+/* 전체 폰트 */
+.root { -fx-font-family: 'Segoe UI', sans-serif; }
+
+/* ============================
+   Pixel Tab (상단 탭 버튼)
+   ============================ */
+.pixel-tab-btn-top {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+.pixel-tab-btn-top:hover {
+    -fx-translate-y: 3;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.3), 5, 0, 0, 2);
+}
+.pixel-tab-btn-top:pressed { -fx-translate-y: 5; }
+.pixel-tab-text {
+    -fx-text-fill: #5c3a21;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-font-family: 'Georgia', serif;
+}
+/* 제목 라벨 스타일 (Study Plan, Focus Timer) */
+.header-label {
+    -fx-text-fill: #5c3a21; /* 진한 갈색 */
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(160, 120, 90, 0.3), 0, 0, 0, 1); /* 은은한 그림자 */
+}
+
+/* 소제목 라벨 (Subject, Target Remaining 등) */
+.sub-header-label {
+    -fx-text-fill: #8d6e63; /* 연한 갈색 */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+
+/* ============================================================
+   [NEW] 로그인 & 회원가입 화면 스타일 (빈티지 컨셉 - 패널 없음)
+   ============================================================ */
+
+/* 1. 타이틀 (금박 글씨 느낌 + 강한 그림자) */
+.vintage-title {
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffecb3; /* 연한 금색 */
+    /* 배경이 없을 때 글씨가 잘 보이도록 그림자를 진하게 설정 */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.9), 4, 0, 0, 2);
+}
+
+/* 2. 입력 필드 (책 속지와 같은 크림색 종이 느낌) */
+.vintage-input {
+    -fx-background-color: #fff8e1; /* 크림색 */
+    -fx-background-radius: 5;
+    -fx-border-color: #8d6e63;     /* 연한 갈색 테두리 */
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4e342e;
+    -fx-prompt-text-fill: #a1887f;
+    /* 입력창 자체에도 그림자를 주어 배경과 분리 */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0, 0, 1);
+}
+
+.vintage-input:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d4af37; /* 포커스 시 금색 테두리 */
+    -fx-effect: dropshadow(gaussian, rgba(212, 175, 55, 0.5), 8, 0, 0, 0);
+}
+
+/* 3. 버튼 (금속 명판 느낌) */
+.vintage-button {
+    -fx-background-color: linear-gradient(to bottom, #f0e68c, #d4af37); /* 금속 그라데이션 */
+    -fx-background-radius: 5;
+    -fx-text-fill: #3e2723; /* 진한 갈색 글자 */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Georgia";
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5, 0, 0, 3);
+    -fx-border-color: #8d6e63;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+.vintage-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #fff9c4, #fbc02d); /* 밝은 금색 */
+}
+
+.vintage-button:pressed {
+    -fx-translate-y: 2;
+    -fx-effect: none;
+}
+
+/* 4. 링크 (오래된 종이 위의 글자색) */
+.vintage-link {
+    -fx-text-fill: #d7ccc8; /* 연한 회갈색 (어두운 배경 위에서 잘 보임) */
+    -fx-font-size: 13px;
+    -fx-underline: true;
+    -fx-border-style: none;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 2, 0, 0, 1); /* 글자 그림자 추가 */
+}
+.vintage-link:visited { -fx-text-fill: #d7ccc8; }
+.vintage-link:hover { -fx-text-fill: #ffffff; } /* 마우스 올리면 흰색 */
+
+/* ============================
+   DatePicker
+   ============================ */
+.paper-date-picker {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #b08d74 transparent;
+}
+.paper-date-picker .text-field {
+    -fx-background-color: transparent;
+}
+/* ============================
+   투명 날짜 선택기 (상단 날짜 표시용)
+   ============================ */
+/* 날짜 선택기 투명화 (글자처럼 보이게) */
+.date-picker > .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5c3a21;
+    -fx-font-family: 'Georgia';
+    -fx-font-weight: bold;
+}
+.date-picker > .arrow-button {
+    -fx-background-color: transparent;
+}
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: #5c3a21; /* 화살표 색상 */
+}
+/* ============================
+   ScrollBar 디자인
+   ============================ */
+.paper-scroll,
+.paper-table .scroll-bar {
+    -fx-background-color: transparent;
+}
+.paper-scroll .increment-button, .paper-scroll .decrement-button,
+.paper-table .increment-button, .paper-table .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.paper-scroll .thumb,
+.paper-table .thumb {
+    -fx-background-color: #b08d74;
+    -fx-background-radius: 5;
+}
+
+/* ============================
+   TimeTable Grid
+   ============================ */
+
+/* ============================
+   TimeTable Grid (최종_해결본)
+   ============================ */
+
+/* ============================
+   TimeTable Grid (Final)
+   ============================ */
+
+.paper-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+.paper-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+/* 1. [전체 틀] 바깥 테두리 실선 마감 */
+.timetable-grid {
+    -fx-background-color: transparent;
+    -fx-grid-lines-visible: false;
+    -fx-border-color: #b08d74;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+/* 2. [시간 글자] 기존 테두리 제거 (배경 판이 대신 그려줌) */
+.time-label {
+
+    -fx-alignment: center;
+    -fx-padding:7;
+    -fx-font-size: 11px;
+    -fx-font-family: 'Georgia';
+    -fx-text-fill: #5c3a21;
+    -fx-border-width: 0; /* 선 없음 */
+}
+
+/* --- 여기서부터 배경 판 스타일 --- */
+
+/* A. [시간 칸] 오른쪽(실선), 아래(실선) */
+.cell-time {
+    -fx-border-color: #b08d74;
+    -fx-border-width: 0 1 1 0;
+    -fx-border-style: solid; /* 실선 */
+}
+/* A-2. [시간 칸 - 맨 아래] 바닥 선 없음 */
+.cell-time-last {
+    -fx-border-color: #b08d74;
+    -fx-border-width: 0 1 0 0; /* 아래(0) */
+    -fx-border-style: solid;
+}
+
+/* B. [중간 모눈] 오른쪽(점선), 아래(점선) */
+.cell-grid-normal {
+    -fx-border-color: #b08d74;
+    -fx-border-width: 0 1 1 0;
+    -fx-border-style: segments(3, 3); /* 점선 */
+}
+/* B-2. [중간 모눈 - 맨 아래] 바닥 선 없음 */
+.cell-grid-bottom {
+    -fx-border-color: #b08d74;
+    -fx-border-width: 0 1 0 0; /* 아래(0) */
+    -fx-border-style: segments(3, 3);
+}
+
+/* C. [오른쪽 끝 모눈] 오른쪽 선 없음, 아래(점선) */
+.cell-grid-end {
+    -fx-border-color: #b08d74;
+    -fx-border-width: 0 0 1 0; /* 오른쪽(0) */
+    -fx-border-style: segments(3, 3);
+}
+/* C-2. [오른쪽 끝 모눈 - 맨 아래] 선 없음 (구석) */
+.cell-grid-corner {
+    -fx-border-width: 0;
+}
+
+/* 2. 형광펜 블록 공통 스타일 */
+.plan-block {
+    -fx-background-radius: 6;           /* 둥근 모서리 */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 1, 1); /* 살짝 그림자 */
+    -fx-opacity: 0.8;                   /* 뒤에 점선이 살짝 비치게 */
+}
+
+/* 3. 파스텔 색상 팔레트 (원하는 색 추가 가능) */
+.color-pink   { -fx-background-color: #ffcccc; } /* 분홍 */
+.color-blue   { -fx-background-color: #cce5ff; } /* 하늘 */
+.color-yellow { -fx-background-color: #fff5cc; } /* 노랑 */
+.color-green  { -fx-background-color: #d4edda; } /* 연두 */
+.color-purple { -fx-background-color: #e8daef; } /* 보라 */
+
+/* ============================
+   Progress Bar
+   ============================ */
+.paper-progress-bar .track {
+    -fx-background-color: rgba(176, 141, 116, 0.3);
+    -fx-background-radius: 10;
+}
+.paper-progress-bar .bar {
+    -fx-background-color: #ff9999;
+    -fx-background-radius: 10;
+}
+
+/* ============================
+   ★ 최종 정리된 Planner Table Style
+   ============================ */
+
+/* 테이블 전체 */
+.paper-table {
+    -fx-background-color: #f5e6d3;
+    -fx-border-color: #b08d74;
+    -fx-border-radius: 5;
+}
+
+/* 헤더 */
+.paper-table .column-header-background {
+    -fx-background-color: rgba(176, 141, 116, 0.3);
+    -fx-background-radius: 5 5 0 0;
+}
+.paper-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent #b08d74 transparent transparent;
+}
+
+/* 셀 */
+.paper-table .table-cell {
+    -fx-text-fill: #5c3a21;
+    -fx-alignment: CENTER-LEFT;
+    -fx-border-color: transparent #b08d74 rgba(176, 141, 116, 0.3) transparent;
+}
+
+/* 행 */
+.paper-table .table-row-cell {
+    -fx-background-color: #f5e6d3;
+}
+.paper-table .table-row-cell:selected {
+    -fx-background-color: #e0cba8;
+}
+.paper-table .virtual-flow .clipped-container .sheet .row {
+    -fx-background-color: #f5e6d3;
+}
+
+/* 셀 텍스트필드 (수정모드) */
+.paper-table .text-field-table-cell .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5c3a21;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+/* 체크박스 */
+.paper-table .check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #b08d74;
+    -fx-border-radius: 3;
+}
+.paper-table .check-box:selected .mark {
+    -fx-background-color: #8B4513;
+}
+
+/* =========================================
+   [색상 선택기] 글씨, 화살표 제거하고 네모만 남기기
+   ========================================= */
+.pixel-color-picker {
+    -fx-background-color: transparent;
+    -fx-border-color: #b08d74;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3;
+
+    /* 크기 고정 (작은 네모 모양) */
+    -fx-pref-width: 35px;
+    -fx-pref-height: 25px;
+    -fx-min-width: 35px;
+    -fx-max-width: 35px;
+
+    -fx-padding: 3; /* 색상 박스와 테두리 사이 여백 */
+}
+
+.pixel-color-picker:hover {
+    -fx-background-color: rgba(176, 141, 116, 0.2);
+    -fx-cursor: hand;
+}
+
+/* 1. 글자("흰색" 등) 숨기기 */
+.pixel-color-picker > .color-picker-label {
+    -fx-padding: 0;
+    -fx-content-display: GRAPHIC_ONLY; /* 글자 없이 그림(색상박스)만 표시 */
+    -fx-alignment: CENTER;
+}
+
+/* 텍스트 영역 자체를 없애기 */
+.pixel-color-picker > .color-picker-label > .text {
+    -fx-font-size: 0; /* 글자 크기 0 */
+    -fx-opacity: 0;   /* 투명 */
+    -fx-padding: 0;
+}
+
+.pixel-color-picker > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 4px; /* 좌우 여백 */
+}
+
+/* 3. 내부 색상 사각형 스타일 */
+.pixel-color-picker .picker-color-rect {
+    -fx-stroke: #b08d74; /* 사각형 테두리 */
+    -fx-stroke-width: 1;
+    /* 사각형 크기 꽉 차게 */
+    -fx-width: 25px;
+    -fx-height: 18px;
+}
+
+/* =========================================
+   메모장 (TextArea) 디자인 수정
+   ========================================= */
+
+/* 1. 메모장 겉통 투명화 및 테두리 */
+.text-area.paper-input {
+    -fx-background-color: transparent; /* 배경 투명 */
+    -fx-border-color: #b08d74;         /* 갈색 테두리 */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #333333;            /* 글씨 색 */
+    -fx-padding: 5px;
+}
+
+/* 2. ★핵심★ 내부 글씨 쓰는 공간 투명화 */
+.text-area.paper-input .content {
+    -fx-background-color: transparent;
+}
+
+/* 3. 스크롤 뷰포트 투명화 */
+.text-area.paper-input .viewport {
+    -fx-background-color: transparent;
+}
+
+/* 4. 안내 문구(프롬프트) 색상 */
+.text-area.paper-input .text {
+    -fx-prompt-text-fill: rgba(139, 69, 19, 0.5); /* 연한 갈색 */
+}
+
+/* 5. 포커스 잡혔을 때 (선택했을 때) 테두리 진하게 */
+.text-area.paper-input:focused {
+    -fx-border-color: #8B4513;
+}
+
+/* =========================================
+   (NEW) 날짜 선택기 (DatePicker) 디자인
+   ========================================= */
+
+/* 1. 겉통과 입력창 투명화 & 밑줄 스타일 */
+.paper-date-picker {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #b08d74 transparent; /* 밑줄만 */
+    -fx-border-width: 1px;
+}
+
+/* 내부 텍스트 필드 스타일 */
+.paper-date-picker > .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 12px;
+    -fx-padding: 0 5 0 0; /* 텍스트 위치 조정 */
+}
+
+/* 2. 달력 버튼 (오른쪽 아이콘) 스타일 */
+.paper-date-picker > .arrow-button {
+    -fx-background-color: transparent; /* 회색 배경 제거 */
+    -fx-cursor: hand;
+    -fx-padding: 0 5px;
+}
+
+/* 달력 아이콘 모양 색상 변경 */
+.paper-date-picker > .arrow-button > .arrow {
+    -fx-background-color: #8B4513; /* 진한 갈색으로 변경 */
+    -fx-background-insets: 0;
+    -fx-padding: 4px; /* 아이콘 크기 조절 */
+    -fx-shape: "M16,18H18V20H16V18M16,22H18V24H16V22M20,18H22V20H20V18M20,22H22V24H20V22M12,18H14V20H12V18M12,22H14V24H12V22M8,18H10V20H8V18M8,22H10V24H8V22M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V27C3,28.1 3.89,29 5,29H19C20.1,29 21,28.1 21,27V5C21,3.9 20.1,3 19,3M19,27H5V8H19V27Z";
+    /* (기본 화살표 대신 네모난 달력 모양 아이콘으로 변경) */
+    -fx-scale-x: 0.7;
+    -fx-scale-y: 0.7;
+}
+
+/* 3. [클릭하면 나오는 달력 팝업창] 디자인 */
+.date-picker-popup {
+    -fx-background-color: #f5e6d3; /* 종이색 배경 */
+    -fx-border-color: #b08d74;     /* 갈색 테두리 */
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* 팝업 내부: 월/년 헤더 */
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: #e0cba8; /* 상단 바 색상 */
+}
+.date-picker-popup > .month-year-pane > .label {
+    -fx-text-fill: #5c3a21;        /* 글씨 갈색 */
+    -fx-font-weight: bold;
+}
+
+/* 팝업 내부: 날짜 셀 */
+.date-picker-popup .day-cell {
+    -fx-background-color: #f5e6d3; /* 셀 배경 */
+    -fx-text-fill: #333333;
+    -fx-border-color: transparent;
+}
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #dcc098; /* 마우스 올렸을 때 */
+}
+.date-picker-popup .selected {
+    -fx-background-color: #8B4513; /* 선택된 날짜 배경 */
+    -fx-text-fill: white;
+}
+.date-picker-popup .today {
+    -fx-border-color: #ff7777;     /* 오늘 날짜 테두리 */
+    -fx-border-width: 1px;
+}
+
+/* ==============================
+   [왼쪽] 컨트롤 요소 디자인
+   ============================== */
+
+/* 1. 콤보박스 (종이 태그 느낌) */
+.book-combo-box {
+    -fx-background-color: #fff8e1; /* 밝은 크림색 */
+    -fx-background-radius: 8;
+    -fx-border-color: #bcaaa4;
+    -fx-border-radius: 8;
+    -fx-border-width: 1.5;
+    -fx-padding: 2 5 2 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4e342e;
+}
+.book-combo-box:hover {
+    -fx-border-color: #8d6e63;
+    -fx-background-color: #ffffff;
+}
+.book-combo-box .list-cell {
+    -fx-text-fill: #4e342e;
+}
+
+/* 2. 목표 설정 버튼 (빈티지 버튼) */
+.goal-button {
+    -fx-background-color: #a1887f; /* 중간 갈색 */
+    -fx-text-fill: #fff8e1;         /* 크림색 글자 */
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #8d6e63;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 2);
+}
+.goal-button:hover {
+    -fx-background-color: #8d6e63;
+}
+.goal-button:pressed {
+    -fx-translate-y: 2;
+    -fx-effect: none;
+}
+.goal-button:disabled {
+    -fx-background-color: #d7ccc8;
+    -fx-text-fill: #efebe9;
+    -fx-opacity: 0.8;
+}
+
+/* 3. 남은 시간 박스 */
+.info-box {
+    -fx-background-color: #FDF5E6;
+    -fx-background-radius: 10;
+    -fx-border-color: #d7ccc8; /* 아주 연한 테두리 */
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 0); /* 안쪽으로 살짝 눌린 느낌 */
+}
+
+/* 4. START/STOP 메인 버튼 */
+.action-button {
+    -fx-background-radius: 20;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0, 0, 3);
+    -fx-border-width: 2;
+    -fx-border-color: rgba(255,255,255,0.3);
+    -fx-border-radius: 20;
+}
+.action-button:pressed {
+    -fx-translate-y: 2;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 1, 0, 0, 1);
+}
+
+/* START 상태 (차분한 숲색) */
+.start-state {
+    -fx-background-color: #558b2f;
+}
+.start-state:hover {
+    -fx-background-color: #33691e;
+}
+
+/* STOP 상태 (차분한 붉은 벽돌색) */
+.stop-state {
+    -fx-background-color: #c62828;
+}
+.stop-state:hover {
+    -fx-background-color: #b71c1c;
+}
+
+/* ==============================
+   [오른쪽] 타이머 텍스트
+   ============================== */
+.timer-text-large {
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 32px; /* [수정됨] 38px -> 32px */
+    -fx-font-weight: bold;
+    -fx-text-fill: #3e2723;
+}
+
+.timer-text-small {
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #6d4c41;
+}
+
+/* ============================
+   D-Day 설정 & 팝업 디자인
+   ============================ */
+
+/* 1. D-Day 설정 버튼 (링크처럼 보이게) */
+.dday-setting-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8d6e63;  /* 연한 갈색 */
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 11px;
+    -fx-cursor: hand;
+    -fx-padding: 2 5 2 5;
+}
+.dday-setting-btn:hover {
+    -fx-text-fill: #5c3a21;  /* 마우스 올리면 진한 갈색 */
+    -fx-background-color: rgba(176, 141, 116, 0.2); /* 살짝 배경색 */
+    -fx-background-radius: 5;
+}
+
+/* 2. D-Day 결과 텍스트 (강렬하게) */
+.dday-result-text {
+    -fx-font-family: 'Georgia';
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff5555; /* 붉은색 강조 */
+    -fx-font-size: 18px;    /* 크기 키움 */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 1, 1);
+}
+
+/* =========================================
+   [공통] 팝업창(Dialog) 디자인 (수정/입력창 등)
+   ========================================= */
+
+/* 1. 팝업창 전체 배경 (종이 질감) */
+.dialog-pane {
+    -fx-background-color: #fdf5e6; /* 연한 베이지 */
+    -fx-border-color: #b08d74;     /* 갈색 테두리 */
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* 2. 상단 헤더 (제목 부분) */
+.dialog-pane .header-panel {
+    -fx-background-color: #ebdccb; /* 헤더 배경 (조금 더 진한 베이지) */
+    -fx-padding: 15 20 15 20;
+    -fx-border-color: transparent transparent #b08d74 transparent; /* 아래쪽만 줄 긋기 */
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-family: 'Georgia';
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5c3a21; /* 진한 갈색 글씨 */
+}
+
+/* 3. 내용물 (본문 텍스트) */
+.dialog-pane .content {
+    -fx-padding: 20;
+}
+.dialog-pane .content .label {
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 13px;
+    -fx-text-fill: #6d4c41;
+}
+
+/* 4. 입력창 (TextField) 디자인 */
+.dialog-pane .text-field {
+    -fx-background-color: #fff8e1; /* 아주 연한 크림색 */
+    -fx-border-color: #b08d74;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+    -fx-text-fill: #3e2723;
+    -fx-font-family: 'Segoe UI';
+}
+.dialog-pane .text-field:focused {
+    -fx-border-color: #d4af37; /* 포커스 시 금색 테두리 */
+    -fx-background-color: white;
+}
+
+/* 5. 버튼 (확인/취소) */
+.dialog-pane .button-bar .button {
+    -fx-background-color: #b08d74;
+    -fx-text-fill: white;
+    -fx-font-family: 'Georgia';
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #8d6e63; /* 마우스 올리면 조금 더 진하게 */
+}
+/* ============================
+   콤보박스 (ComboBox) 추가 스타일
+   ============================ */
+
+/* 화살표 영역 배경 투명화 */
+.book-combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* 화살표 색상을 갈색으로 통일 */
+.book-combo-box .arrow-button .arrow {
+    -fx-background-color: #5c3a21;
+}
+
+/* 리스트 팝업창 (펼쳤을 때) 디자인 */
+.book-combo-box .list-view {
+    -fx-background-color: #fdf5e6; /* 종이색 */
+    -fx-border-color: #b08d74;
+    -fx-border-width: 1px;
+}
+
+/* 리스트 아이템 */
+.book-combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5c3a21;
+    -fx-font-family: 'Segoe UI';
+}
+.book-combo-box .list-cell:hover {
+    -fx-background-color: #e0c3a8; /* 마우스 올리면 */
+}
+.book-combo-box .list-cell:filled:selected {
+    -fx-background-color: #8d6e63; /* 선택된 항목 */
+    -fx-text-fill: white;
+}
+
+/* ============================
+    정원 스타일
+   ============================ */
+/* 정원 배경 스타일 */
+.garden-background {
+    -fx-background-image: url('images/garden_bg.png');
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+/* 상단 버튼 스타일 */
+.garden-top-btn {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-radius: 20;
+    -fx-border-color: #b08d74;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0, 0, 2);
+}
+.garden-top-btn:hover {
+    -fx-background-color: #ffffff;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* 보관함 패널 스타일 */
+.inventory-panel {
+    -fx-background-color: rgba(253, 245, 230, 0.95); /* 연한 베이지 반투명 */
+    -fx-border-color: #8d6e63;
+    -fx-border-width: 3;
+    -fx-background-radius: 15 15 0 0; /* 위쪽만 둥글게 */
+    -fx-border-radius: 15 15 0 0;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, -5);
+}
+
+/* 보관함 제목 라벨 */
+.inventory-title {
+    -fx-font-family: 'Georgia';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5c3a21;
+}
+
+/* 꽃 카드 스타일 */
+.flower-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-color: #d7ccc8;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-alignment: center;
+    -fx-spacing: 5;
+    -fx-cursor: hand;
+    -fx-min-width: 100px;
+    -fx-min-height: 130px;
+}
+.flower-card:hover {
+    -fx-border-color: #b08d74;
+    -fx-translate-y: -3; /* 살짝 떠오르는 효과 */
+}
+
+/* 꽃 이름 라벨 */
+.flower-name {
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3e2723;
+}
+
+/* 카드 오버레이 버튼 (배치/모으기) 컨테이너 */
+.card-actions {
+    -fx-background-color: rgba(0, 0, 0, 0.6); /* 반투명 검은 배경 */
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-padding: 10;
+    /* 기본적으로 숨김 */
+    -fx-opacity: 0;
+    -fx-transition: opacity 0.2s ease-in-out;
+}
+/* 카드에 마우스 올렸을 때 액션 컨테이너 보이기 */
+.flower-card:hover .card-actions {
+    -fx-opacity: 1;
+}
+
+/* 액션 버튼 스타일 */
+.action-btn {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-radius: 50; /* 동그랗게 */
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+.action-btn:hover {
+    -fx-background-color: #ffffff;
+    -fx-effect: glow(0.5);
+}

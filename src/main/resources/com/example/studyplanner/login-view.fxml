@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #4a3b32;"
+           stylesheets="@planner.css"
+           xmlns="http://javafx.com/javafx/17.0.2-ea"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.studyplanner.controller.LoginController">
+
+    <!-- [Layer 1] 배경: 책 표지 -->
+    <ImageView fitHeight="700.0" preserveRatio="true">
+        <image>
+            <Image url="@images/login_bg.png" />
+        </image>
+        <effect>
+            <DropShadow color="#00000080" radius="20" spread="0.3" />
+        </effect>
+    </ImageView>
+
+    <!-- [Layer 2] 로그인 폼 (패널 없이 배경 위에 바로 배치) -->
+    <VBox alignment="CENTER" maxWidth="360.0" spacing="15.0">
+        <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+        </padding>
+
+        <!-- 1. 꽃 아이콘 -->
+        <ImageView fitHeight="100.0" fitWidth="100.0" preserveRatio="true">
+            <image>
+                <Image url="@images/flower_icon.png" />
+            </image>
+            <effect>
+                <DropShadow color="#00000060" radius="15" />
+            </effect>
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </ImageView>
+
+        <!-- 2. 서비스명 -->
+        <Label styleClass="vintage-title" text="Focus Garden">
+            <VBox.margin>
+                <Insets bottom="25.0" />
+            </VBox.margin>
+        </Label>
+
+        <!-- 3. 아이디 -->
+        <TextField fx:id="idField" promptText="아이디" styleClass="vintage-input" />
+
+        <!-- 4. 비밀번호 -->
+        <PasswordField fx:id="pwField" promptText="비밀번호" styleClass="vintage-input" />
+
+        <!-- 5. 로그인 버튼 -->
+        <Button fx:id="loginButton" maxWidth="Infinity" onAction="#handleLogin"
+                prefHeight="45.0" styleClass="vintage-button" text="L O G I N">
+            <VBox.margin>
+                <Insets top="15.0" />
+            </VBox.margin>
+        </Button>
+
+        <!-- 6. 회원가입 링크 (문구 변경됨) -->
+        <Hyperlink onAction="#handleSignUp" styleClass="vintage-link" text="회원가입 하기">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </Hyperlink>
+
+    </VBox>
+
+</StackPane>
