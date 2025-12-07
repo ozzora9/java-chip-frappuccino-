@@ -850,6 +850,7 @@
     -fx-opacity: 1;
 }
 
+
 /* 액션 버튼 스타일 */
 .action-btn {
     -fx-background-color: rgba(255, 255, 255, 0.9);
@@ -857,7 +858,9 @@
     -fx-padding: 8;
     -fx-cursor: hand;
 }
+
+/* ★ [수정됨] glow 함수 제거하고 그림자 효과로 대체 */
 .action-btn:hover {
     -fx-background-color: #ffffff;
-    -fx-effect: glow(0.5);
+    -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.8), 10, 0, 0, 0); /* 금색 은은한 빛 */
 }

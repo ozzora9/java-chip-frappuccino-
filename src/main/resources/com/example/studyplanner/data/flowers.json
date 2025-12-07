@@ -3,30 +3,151 @@
     "id": 1,
     "name": "장미",
     "meaning": "사랑과 열정",
-    "imagePath": "/com/example/studyplanner/images/flowers/rose/block.png",
-    "seedIcon": "/com/example/studyplanner/images/flowers/rose/seed.png",
-    "sproutIcon": "/com/example/studyplanner/images/flowers/rose/sprout.png",
-    "growIcon": "/com/example/studyplanner/images/flowers/rose/grow.png",
-    "bloomIcon": "/com/example/studyplanner/images/flowers/rose/bloom.png"
+    "imagePath": "/com/example/studyplanner/images/flowers/rose/rose4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/rose/rose1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/rose/rose2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/rose/rose3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/rose/rose4.png"
   },
   {
     "id": 2,
     "name": "해바라기",
     "meaning": "존경과 희망",
-    "imagePath": "/com/example/studyplanner/images/flowers/sunflower/block.png",
-    "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/seed.png",
-    "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sprout.png",
-    "growIcon": "/com/example/studyplanner/images/flowers/sunflower/grow.png",
-    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png"
+    "imagePath": "/com/example/studyplanner/images/flowers/sunflower/sunflower4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/sunflower1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sunflower2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/sunflower/sunflower3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/sunflower4.png"
   },
   {
     "id": 3,
     "name": "라일락",
     "meaning": "첫사랑의 기억",
-    "imagePath": "/com/example/studyplanner/images/flowers/sunflower/sunflower.jpg",
-    "seedIcon": "/com/example/studyplanner/images/flowers/sunflower/seed.png",
-    "sproutIcon": "/com/example/studyplanner/images/flowers/sunflower/sprout.png",
-    "growIcon": "/com/example/studyplanner/images/flowers/sunflower/grow.png",
-    "bloomIcon": "/com/example/studyplanner/images/flowers/sunflower/bloom.png"
+    "imagePath": "/com/example/studyplanner/images/flowers/lilac/lilac4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/lilac/lilac1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/lilac/lilac2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/lilac/lilac3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/lilac/lilac4.png"
+  },
+
+  {
+    "id": 4,
+    "name": "튤립",
+    "meaning": "사랑의 고백",
+    "imagePath": "/com/example/studyplanner/images/flowers/tulip/tulip4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/tulip/tulip1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/tulip/tulip2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/tulip/tulip3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/tulip/tulip4.png"
+  },
+  {
+    "id": 5,
+    "name": "코스모스",
+    "meaning": "조화와 순수",
+    "imagePath": "/com/example/studyplanner/images/flowers/cosmos/cosmos4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/cosmos/cosmos1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/cosmos/cosmos2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/cosmos/cosmos3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/cosmos/cosmos4.png"
+  },
+  {
+    "id": 6,
+    "name": "데이지",
+    "meaning": "희망과 순수함",
+    "imagePath": "/com/example/studyplanner/images/flowers/daisy/daisy4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/daisy/daisy1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/daisy/daisy2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/daisy/daisy3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/daisy/daisy4.png"
+  },
+  {
+    "id": 7,
+    "name": "안개꽃",
+    "meaning": "영원한 사랑",
+    "imagePath": "/com/example/studyplanner/images/flowers/gypsophila/gypsophila4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/gypsophila/gypsophila1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/gypsophila/gypsophila2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/gypsophila/gypsophila3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/gypsophila/gypsophila4.png"
+  },
+  {
+    "id": 8,
+    "name": "라넌큘러스",
+    "meaning": "매혹적인 아름다움",
+    "imagePath": "/com/example/studyplanner/images/flowers/ranunculus/ranunculus4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/ranunculus/ranunculus1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/ranunculus/ranunculus2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/ranunculus/ranunculus3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/ranunculus/ranunculus4.png"
+  },
+  {
+    "id": 9,
+    "name": "팬지",
+    "meaning": "사랑의 추억",
+    "imagePath": "/com/example/studyplanner/images/flowers/pansy/pansy4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/pansy/pansy1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/pansy/pansy2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/pansy/pansy3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/pansy/pansy4.png"
+  },
+  {
+    "id": 10,
+    "name": "프리지아",
+    "meaning": "순수한 믿음",
+    "imagePath": "/com/example/studyplanner/images/flowers/freesia/freesia4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/freesia/freesia1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/freesia/freesia2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/freesia/freesia3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/freesia/freesia4.png"
+  },
+  {
+    "id": 11,
+    "name": "나팔꽃",
+    "meaning": "사랑의 시작",
+    "imagePath": "/com/example/studyplanner/images/flowers/morningGlory/morningGlory4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/morningGlory/morningGlory1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/morningGlory/morningGlory2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/morningGlory/morningGlory3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/morningGlory/morningGlory4.png"
+  },
+  {
+    "id": 12,
+    "name": "아네모네",
+    "meaning": "진심과 기대",
+    "imagePath": "/com/example/studyplanner/images/flowers/anemone/anemone4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/anemone/anemone1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/anemone/anemone2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/anemone/anemone3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/anemone/anemone4.png"
+  },
+  {
+    "id": 13,
+    "name": "양귀비",
+    "meaning": "위로와 격려",
+    "imagePath": "/com/example/studyplanner/images/flowers/poppy/poppy4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/poppy/poppy1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/poppy/poppy2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/poppy/poppy3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/poppy/poppy4.png"
+  },
+  {
+    "id": 14,
+    "name": "백일홍",
+    "meaning": "지속된 사랑",
+    "imagePath": "/com/example/studyplanner/images/flowers/zinnia/zinnia4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/zinnia/zinnia1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/zinnia/zinnia2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/zinnia/zinnia3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/zinnia/zinnia4.png"
+  },
+  {
+    "id": 15,
+    "name": "베고니아",
+    "meaning": "조심스러움",
+    "imagePath": "/com/example/studyplanner/images/flowers/begonia/begonia4.png",
+    "seedIcon": "/com/example/studyplanner/images/flowers/begonia/begonia1.png",
+    "sproutIcon": "/com/example/studyplanner/images/flowers/begonia/begonia2.png",
+    "growIcon": "/com/example/studyplanner/images/flowers/begonia/begonia3.png",
+    "bloomIcon": "/com/example/studyplanner/images/flowers/begonia/begonia4.png"
   }
 ]

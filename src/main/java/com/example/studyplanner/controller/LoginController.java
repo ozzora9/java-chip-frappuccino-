@@ -1,5 +1,7 @@
 package com.example.studyplanner.controller;
 
+import com.example.studyplanner.manager.FlowerManager;
+import com.example.studyplanner.manager.UserManager;
 import com.example.studyplanner.model.UserSession;
 
 import com.example.studyplanner.service.DatabaseService;
@@ -43,8 +45,16 @@ public class LoginController {
         if (nickname != null) {
             // 3. 로그인 성공! -> 앱 전체에서 쓸 수 있게 세션에 저장
             UserSession.getInstance().login(id, nickname);
-            System.out.println("✅ 로그인 성공: " + id + " (" + nickname + ")");
+            UserManager.initialize(dataService, id);
+            DatabaseService db = new DatabaseService();
+            db.initFlowerInventory(id);
+            FlowerManager.getInstance().loadInventoryFromDB(id);
 
+            // ★ [추가] 로그인 직후, 오늘 공부한 시간을 TimerManager에 로드
+            com.example.studyplanner.manager.TimerManager.getInstance().loadDailyTotalFromDB();
+
+
+            System.out.println("✅ 로그인 성공: " + id + " (" + nickname + ")");
             // 4. 정원(홈) 화면으로 이동
             moveScene("garden-view.fxml");
         } else {

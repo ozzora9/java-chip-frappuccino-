@@ -1,10 +1,17 @@
 package com.example.studyplanner.controller;
 
+import com.example.studyplanner.PopupHelper;
+import com.example.studyplanner.manager.FlowerManager;
+import com.example.studyplanner.manager.UserManager;
 import com.example.studyplanner.model.DailyRecord;
+import com.example.studyplanner.model.Flower;
+import com.example.studyplanner.model.User;
 import com.example.studyplanner.model.UserSession;
 import com.example.studyplanner.service.DatabaseService;
-import com.example.studyplanner.PopupHelper; // ★ 이 줄 추가!
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +34,6 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -41,37 +47,52 @@ import java.util.ResourceBundle;
 
 public class PlannerController implements Initializable {
 
-    private String userId;
-
-    // --- FXML 요소 ---
-    @FXML private Label ddayLabel;
-    @FXML private DatePicker currentDatePicker;
-    @FXML private TextField quoteInput;
-    @FXML private TextField subjectInput;
-    @FXML private TextField taskInput;
-    @FXML private ColorPicker colorPicker;
-    @FXML private ColorPicker manualColor;
-
-    @FXML private TableView<Row> table;
-    @FXML private TableColumn<Row,String> colSubject;
-    @FXML private TableColumn<Row,String> colContent;
-    @FXML private TableColumn<Row,Boolean> colDone;
-    @FXML private ProgressBar progressBar;
-    @FXML private Label progressLabel;
-
-    @FXML private VBox todayList;
-    @FXML private TextField todayInput;
-    @FXML private TextField targetHour;
-    @FXML private TextField todaysum;
-    @FXML private TextArea memoArea;
-
-    @FXML private GridPane timeTableGrid;
-    @FXML private TextField weatherInput;
-
-    @FXML private Label totalTimerLabel;
-
     private final ObservableList<Row> rows = FXCollections.observableArrayList();
     private final DatabaseService dataService = new DatabaseService();
+    private String userId;
+    // --- FXML 요소 ---
+    @FXML
+    private Label ddayLabel;
+    @FXML
+    private DatePicker currentDatePicker;
+    @FXML
+    private TextField quoteInput;
+    @FXML
+    private TextField subjectInput;
+    @FXML
+    private TextField taskInput;
+    @FXML
+    private ColorPicker colorPicker;
+    @FXML
+    private ColorPicker manualColor;
+    @FXML
+    private TableView<Row> table;
+    @FXML
+    private TableColumn<Row, String> colSubject;
+    @FXML
+    private TableColumn<Row, String> colContent;
+    @FXML
+    private TableColumn<Row, Boolean> colDone;
+    @FXML
+    private ProgressBar progressBar;
+    @FXML
+    private Label progressLabel;
+    @FXML
+    private VBox todayList;
+    @FXML
+    private TextField todayInput;
+    @FXML
+    private TextField targetHour;
+    @FXML
+    private TextField todaysum;
+    @FXML
+    private TextArea memoArea;
+    @FXML
+    private GridPane timeTableGrid;
+    @FXML
+    private TextField weatherInput;
+    @FXML
+    private Label totalTimerLabel;
     private int currentStage = 0;
 
     @Override
@@ -87,11 +108,13 @@ public class PlannerController implements Initializable {
             currentDatePicker.setValue(LocalDate.now());
             String pattern = "yyyy . MM . dd . E";
             currentDatePicker.setConverter(new StringConverter<LocalDate>() {
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+                final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
                 @Override
                 public String toString(LocalDate date) {
                     return (date != null) ? dateFormatter.format(date) : "";
                 }
+
                 @Override
                 public LocalDate fromString(String string) {
                     return (string != null && !string.isEmpty()) ? LocalDate.parse(string, dateFormatter) : null;
@@ -148,7 +171,10 @@ public class PlannerController implements Initializable {
 
             Row row = new Row(name, info.getTaskContent(), info.isDone(), color);
             // 체크박스 변경 시 저장
-            row.doneProperty().addListener((o, oldV, newV) -> { updateProgress(); saveAllData(); });
+            row.doneProperty().addListener((o, oldV, newV) -> {
+                updateProgress();
+                saveAllData();
+            });
             rows.add(row);
         }
 
@@ -157,13 +183,14 @@ public class PlannerController implements Initializable {
         for (com.example.studyplanner.model.StudySession session : record.getStudySessions()) {
             try {
                 LocalTime start = LocalTime.parse(session.getStartTime());
-                int durationMin = (int)(session.getDurationSeconds() / 60);
+                int durationMin = (int) (session.getDurationSeconds() / 60);
                 int startRow = start.getHour() - 6;
                 if (startRow >= 0 && durationMin > 0) {
                     int rowSpan = Math.max(1, durationMin / 60);
                     addManualSchedule(session.getSubjectName(), startRow, rowSpan, "pink");
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         updateProgress();
     }
@@ -190,8 +217,7 @@ public class PlannerController implements Initializable {
             long savedTime = (oldInfo != null) ? oldInfo.getStudiedSeconds() : 0;
 
             // (B) 새 정보 생성 (화면에 있는 색상, 내용, 완료여부 + 아까 찾은 공부시간)
-            DailyRecord.SubjectRecord newInfo = new DailyRecord.SubjectRecord(
-                    savedTime,       // 공부 시간 유지
+            DailyRecord.SubjectRecord newInfo = new DailyRecord.SubjectRecord(savedTime,       // 공부 시간 유지
                     r.getColor(),    // 현재 색상
                     r.getContent(),  // 현재 내용
                     r.isDone()       // 현재 완료 여부
@@ -287,11 +313,7 @@ public class PlannerController implements Initializable {
             menu.getItems().addAll(editItem, deleteItem);
 
             // 빈 행이 아닐 때만 메뉴 표시
-            row.contextMenuProperty().bind(
-                    javafx.beans.binding.Bindings.when(row.emptyProperty())
-                            .then((ContextMenu) null)
-                            .otherwise(menu)
-            );
+            row.contextMenuProperty().bind(javafx.beans.binding.Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(menu));
             return row;
         });
     }
@@ -310,7 +332,8 @@ public class PlannerController implements Initializable {
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
-        grid.setHgap(10); grid.setVgap(10);
+        grid.setHgap(10);
+        grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField subjectField = new TextField(row.getSubject());
@@ -394,23 +417,28 @@ public class PlannerController implements Initializable {
     }
 
     private String toHexString(Color color) {
-        return String.format("#%02X%02X%02X", (int)(color.getRed()*255), (int)(color.getGreen()*255), (int)(color.getBlue()*255));
+        return String.format("#%02X%02X%02X", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
     }
 
     // -------------------------------------------------------------
     // 이벤트 핸들러
     // -------------------------------------------------------------
-    @FXML private void handleAddRow() {
+    @FXML
+    private void handleAddRow() {
         String s = subjectInput.getText();
         String t = taskInput.getText();
         if (s == null || s.trim().isEmpty()) return;
         String colorHex = (colorPicker.getValue() != null) ? toHexString(colorPicker.getValue()) : "#ffcccc";
         Row r = new Row(s, t, false, colorHex);
         // 리스너 연결
-        r.doneProperty().addListener((o, oldV, newV) -> { updateProgress(); saveAllData(); });
+        r.doneProperty().addListener((o, oldV, newV) -> {
+            updateProgress();
+            saveAllData();
+        });
         rows.add(r);
         saveAllData();
-        subjectInput.clear(); taskInput.clear();
+        subjectInput.clear();
+        taskInput.clear();
     }
 
     @FXML
@@ -452,7 +480,8 @@ public class PlannerController implements Initializable {
         todayInput.clear();
     }
 
-    @FXML void handleSetDDay(ActionEvent event) {
+    @FXML
+    void handleSetDDay(ActionEvent event) {
         // (기존 코드 유지)
         Dialog<ButtonType> dialog = new Dialog<>();
         URL cssUrl = getClass().getResource("/com/example/studyplanner/planner.css");
@@ -461,11 +490,15 @@ public class PlannerController implements Initializable {
         dialog.setHeaderText("시작일과 목표일을 선택하세요");
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         GridPane grid = new GridPane();
-        grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(20, 20, 10, 10));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 20, 10, 10));
         DatePicker startPicker = new DatePicker(LocalDate.now());
         DatePicker endPicker = new DatePicker(LocalDate.now().plusDays(30));
-        grid.add(new Label("시작일:"), 0, 0); grid.add(startPicker, 1, 0);
-        grid.add(new Label("목표일:"), 0, 1); grid.add(endPicker, 1, 1);
+        grid.add(new Label("시작일:"), 0, 0);
+        grid.add(startPicker, 1, 0);
+        grid.add(new Label("목표일:"), 0, 1);
+        grid.add(endPicker, 1, 1);
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait().ifPresent(type -> {
             if (type == ButtonType.OK) {
@@ -474,7 +507,8 @@ public class PlannerController implements Initializable {
                 if (start != null && end != null) {
                     long diff = ChronoUnit.DAYS.between(start, end);
                     if (ddayLabel != null) {
-                        if (diff >= 0) ddayLabel.setText("D-" + diff); else ddayLabel.setText("D+" + Math.abs(diff));
+                        if (diff >= 0) ddayLabel.setText("D-" + diff);
+                        else ddayLabel.setText("D+" + Math.abs(diff));
                     }
                 }
             }
@@ -498,47 +532,111 @@ public class PlannerController implements Initializable {
 
         progressBar.setProgress(rate);
 
+        UserManager um = UserManager.getInstance();
+        int stage = um.getPlannerStage(); // 현재 메모리에 저장된 단계
+
         // 3. 단계별 텍스트 및 팝업 트리거
         if (percent < 30) {
             progressLabel.setText("씨앗이 자라는 중... (" + percent + "%)");
-            // 3개 입력 완료 시 씨앗 지급 (최초 1회)
-            if (currentStage < 1) {
-                PopupHelper.showAutoPopup("씨앗 획득! 🌱", "계획 3개를 작성하여\n씨앗을 심었습니다!");
-                currentStage = 1;
+
+            // ============================================================
+            // ★ [수정됨] 씨앗 지급 로직 (팝업 중복 방지)
+            // ============================================================
+            if (stage < 1) {
+                // DB에서 '마지막으로 플래너 씨앗을 받은 날짜'를 가져옴
+                String lastDate = um.getUser().getPlannerDate();
+                String today = LocalDate.now().toString();
+
+                // 🔥 오늘 날짜와 다를 때만(아직 안 받았을 때만) 팝업 & 지급 실행
+                if (!today.equals(lastDate)) {
+                    PopupHelper.showAutoPopup("씨앗 획득! 🌱", "계획 3개를 작성하여\n씨앗을 심었습니다!");
+                    givePlannerSeedIfNeeded(); // 내부에서 날짜 업데이트 및 씨앗 지급 수행
+                }
+
+                // 받았든 안 받았든, 이번 실행에서는 더 이상 체크하지 않도록 단계 업데이트
+                stage = 1;
+                um.setPlannerStage(1); // UserManager에도 상태 저장
             }
-        }
-        else if (percent < 60) {
+            // ============================================================
+
+        } else if (percent < 60) {
             progressLabel.setText("새싹이 자라는 중... (" + percent + "%)");
-            if (currentStage < 2) {
+            if (stage < 2) {
                 PopupHelper.showAutoPopup("레벨 업! 🌿", "새싹이 돋아났습니다!\n조금만 더 힘내세요!");
-                currentStage = 2;
+                stage = 2;
+                um.setPlannerStage(2);
             }
-        }
-        else if (percent < 100) {
+        } else if (percent < 100) {
             progressLabel.setText("꽃봉오리가 맺히는 중... (" + percent + "%)");
-            if (currentStage < 3) {
+            if (stage < 3) {
                 PopupHelper.showAutoPopup("레벨 업! 🌷", "꽃봉오리가 맺혔습니다.\n곧 꽃이 필 거예요!");
-                currentStage = 3;
+                stage = 3;
+                um.setPlannerStage(3);
             }
-        }
-        else { // 100%
+        } else { // 100%
             progressLabel.setText("꽃이 피었습니다! 🌸");
-            if (currentStage < 4) {
-                PopupHelper.showAutoPopup("축하합니다! 🌸", "모든 계획을 달성하여\n꽃이 활짝 피었습니다!\n(컬렉션에 추가됨)");
-                currentStage = 4;
-                // 여기에 컬렉션 추가 로직 넣기
+
+            if (stage < 4) {
+                stage = 4;
+                um.setPlannerStage(4);
+
+                // ... (기존 꽃 지급 로직 유지) ...
+                Integer id = UserManager.getInstance().getTodayPlannerSeedFlowerId();
+                if (id != null) {
+                    String today = LocalDate.now().toString();
+                    com.example.studyplanner.manager.FlowerManager fm = com.example.studyplanner.manager.FlowerManager.getInstance();
+
+                    if (!today.equals(um.getLastFlowerGivenPlanner())) {
+                        fm.addFlowerCount(id, 1);
+                        fm.unlockCard(id);
+                        com.example.studyplanner.model.Flower f = fm.getFlowerById(id);
+                        PopupHelper.showAutoPopup("축하합니다! 🌸", f.getName() + " 꽃과 꽃말 카드가 해금되었습니다!");
+                        um.updateFlowerGivenFromPlanner(today);
+                    }
+                }
             }
         }
     }
 
+    private void givePlannerSeedIfNeeded() {
+        User user = UserManager.getInstance().getUser();
+        String today = LocalDate.now().toString();
+
+        // [수정] 메서드 이름 변경됨: getPlannerDate()
+        if (today.equals(user.getPlannerDate())) return;
+
+        int flowerId = FlowerManager.getInstance().giveRandomSeed();
+        UserManager.getInstance().setTodayPlannerSeedFlowerId(flowerId);
+        UserManager.getInstance().updateSeedFromPlanner(today);
+
+        Flower f = FlowerManager.getInstance().getFlowerById(flowerId);
+        PopupHelper.showAutoPopup("씨앗 획득! 🌱", f.getName() + " 씨앗을 획득했습니다!");
+    }
 
 
     // --- 네비게이션 ---
-    @FXML void navGarden(ActionEvent event) { switchScene(event, "garden-view.fxml"); }
-    @FXML void navPlanner(ActionEvent event) { switchScene(event, "planner-view.fxml"); }
-    @FXML void navTimer(ActionEvent event) { switchScene(event, "timer-view.fxml"); }
-    @FXML void navBook(ActionEvent event) { switchScene(event, "collection-view.fxml"); }
-    @FXML void goToTimer(MouseEvent event) {
+    @FXML
+    void navGarden(ActionEvent event) {
+        switchScene(event, "garden-view.fxml");
+    }
+
+    @FXML
+    void navPlanner(ActionEvent event) {
+        switchScene(event, "planner-view.fxml");
+    }
+
+    @FXML
+    void navTimer(ActionEvent event) {
+        switchScene(event, "timer-view.fxml");
+    }
+
+    @FXML
+    void navBook(ActionEvent event) {
+        switchScene(event, "collection-view.fxml");
+    }
+
+    @FXML
+    void goToTimer(MouseEvent event) {
         try {
             URL fxmlUrl = getClass().getResource("timer-view.fxml");
             if (fxmlUrl == null) return;
@@ -547,20 +645,27 @@ public class PlannerController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 720));
             stage.show();
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void switchScene(ActionEvent event, String fxmlFileName) {
         try {
             URL fxmlUrl = getClass().getResource(fxmlFileName);
             if (fxmlUrl == null) fxmlUrl = getClass().getResource("/com/example/studyplanner/" + fxmlFileName);
-            if (fxmlUrl == null) { System.out.println("파일 없음: " + fxmlFileName); return; }
+            if (fxmlUrl == null) {
+                System.out.println("파일 없음: " + fxmlFileName);
+                return;
+            }
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1200, 720));
             stage.show();
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Row Class
@@ -569,17 +674,56 @@ public class PlannerController implements Initializable {
         private final StringProperty content = new SimpleStringProperty();
         private final BooleanProperty done = new SimpleBooleanProperty(false);
         private String color;
-        public Row(String s, String c, boolean d, String color) { setSubject(s); setContent(c); setDone(d); this.color = color; }
-        public String getSubject() { return subject.get(); }
-        public void setSubject(String v) { subject.set(v); }
-        public StringProperty subjectProperty() { return subject; }
-        public String getContent() { return content.get(); }
-        public void setContent(String v) { content.set(v); }
-        public StringProperty contentProperty() { return content; }
-        public boolean isDone() { return done.get(); }
-        public void setDone(boolean v) { done.set(v); }
-        public BooleanProperty doneProperty() { return done; }
-        public String getColor() { return color; }
-        public void setColor(String color) { this.color = color; }
+
+        public Row(String s, String c, boolean d, String color) {
+            setSubject(s);
+            setContent(c);
+            setDone(d);
+            this.color = color;
+        }
+
+        public String getSubject() {
+            return subject.get();
+        }
+
+        public void setSubject(String v) {
+            subject.set(v);
+        }
+
+        public StringProperty subjectProperty() {
+            return subject;
+        }
+
+        public String getContent() {
+            return content.get();
+        }
+
+        public void setContent(String v) {
+            content.set(v);
+        }
+
+        public StringProperty contentProperty() {
+            return content;
+        }
+
+        public boolean isDone() {
+            return done.get();
+        }
+
+        public void setDone(boolean v) {
+            done.set(v);
+        }
+
+        public BooleanProperty doneProperty() {
+            return done;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
     }
 }

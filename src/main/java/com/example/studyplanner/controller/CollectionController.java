@@ -2,7 +2,6 @@ package com.example.studyplanner.controller;
 
 import com.example.studyplanner.manager.FlowerManager;
 import com.example.studyplanner.model.Flower;
-import com.example.studyplanner.service.DataStore;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -29,7 +28,6 @@ public class CollectionController {
 
     @FXML
     public void initialize() {
-        DataStore.loadFromJson();
         renderItemGrid();
     }
 
@@ -38,17 +36,27 @@ public class CollectionController {
 
         for (Flower f : FlowerManager.getInstance().getCatalog()) {
             // 슬롯 배경
-            ImageView slotBg = new ImageView(
-                    new Image(Objects.requireNonNull(getClass().getResource(
-                            "/com/example/studyplanner/images/UI_TravelBook_Slot01b.png")).toExternalForm())
-            );
+            ImageView slotBg = new ImageView();
+            try {
+                slotBg.setImage(new Image(Objects.requireNonNull(getClass().getResource(
+                        "/com/example/studyplanner/images/UI_TravelBook_Slot01b.png")).toExternalForm()));
+            } catch (Exception e) {
+                System.err.println("❌ 슬롯 이미지 로드 실패");
+            }
             slotBg.setFitWidth(72);
             slotBg.setFitHeight(72);
 
-            // 꽃 이미지
-            ImageView img = new ImageView(
-                    new Image(getClass().getResource(f.getImagePath()).toExternalForm())
-            );
+            // ★ [수정됨] 꽃 이미지 안전하게 로드
+            ImageView img = new ImageView();
+            String imgPath = f.getImagePath();
+            URL imgUrl = getClass().getResource(imgPath);
+
+            if (imgUrl != null) {
+                img.setImage(new Image(imgUrl.toExternalForm()));
+            } else {
+                System.err.println("❌ [Collection] 이미지 없음: " + imgPath);
+                // 이미지가 없을 때 보여줄 빈 투명 이미지나 대체 이미지 설정 가능
+            }
 
             img.setFitWidth(48);
             img.setFitHeight(48);
@@ -57,16 +65,19 @@ public class CollectionController {
             stack.setAlignment(Pos.CENTER);
 
             // 🔒 잠겨있다면 효과 적용
-            if (!f.isUnlocked()) {
+            if (!f.isSeedUnlocked()) {
                 ColorAdjust darken = new ColorAdjust();
                 darken.setBrightness(-0.6);
                 img.setEffect(darken);
                 img.setOpacity(0.4);
 
-                ImageView lock = new ImageView(
-                        new Image(Objects.requireNonNull(getClass().getResource(
-                                "/com/example/studyplanner/images/lock.png")).toExternalForm())
-                );
+                ImageView lock = new ImageView();
+                try {
+                    lock.setImage(new Image(Objects.requireNonNull(getClass().getResource(
+                            "/com/example/studyplanner/images/lock.png")).toExternalForm()));
+                } catch (Exception e) {
+                    // lock 이미지가 없어도 넘어가도록 처리
+                }
                 lock.setFitWidth(26);
                 lock.setFitHeight(26);
                 StackPane.setAlignment(lock, Pos.CENTER);
@@ -84,7 +95,7 @@ public class CollectionController {
         detailContent.getChildren().clear();
 
         // 잠김 카드라면 → 간단한 잠김 UI 표시
-        if (!f.isUnlocked()) {
+        if (!f.isCardUnlocked()) {
             VBox lockedBox = new VBox(10);
             lockedBox.setStyle("-fx-padding: 20;");
             Label locked = new Label("아직 발견되지 않은 꽃입니다.");
@@ -126,6 +137,8 @@ public class CollectionController {
             if (fxmlUrl == null) {
                 fxmlUrl = getClass().getResource("/com/example/studyplanner/" + fxmlFileName);
             }
+            if (fxmlUrl == null) return; // 파일 없으면 무시
+
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
