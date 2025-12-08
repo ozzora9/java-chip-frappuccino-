@@ -64,7 +64,7 @@ public class GardenController implements Initializable {
     void handleGrowthRate(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("성장률 확인 선택");
-        alert.setHeaderText("어떤 씨앗의 상태를 확인하시겠습니까?");ㄹ
+        alert.setHeaderText("어떤 씨앗의 상태를 확인하시겠습니까?");
         alert.setContentText("확인하고 싶은 대상을 선택해주세요.");
 
         ButtonType plannerBtn = new ButtonType("플래너 씨앗");
