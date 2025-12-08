@@ -61,7 +61,7 @@ public class LoginController {
             showAlert("로그인 실패", "아이디 또는 비밀번호가 일치하지 않습니다.");
         }
     }
-
+// 변경변경!!!
     @FXML
     public void handleSignUp(ActionEvent event) {
         // 회원가입 화면으로 이동
