@@ -24,7 +24,7 @@ javafx {
 
 application {
     // ✨ 여기 실제 메인 클래스 이름으로 변경
-    mainClass.set("com.example.studyplanner.HelloApplication")
+    mainClass.set("com.example.studyplanner.App")
 }
 
 tasks.withType<JavaCompile> {

@@ -1,225 +1,167 @@
 package com.example.studyplanner.service;
 
 import com.example.studyplanner.model.DailyRecord;
-import com.example.studyplanner.model.DailyRecord.SubjectRecord;
-import com.example.studyplanner.model.StudySession;
+import com.example.studyplanner.model.User;
+import com.google.gson.Gson;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Map;
 
 public class DatabaseService {
 
-    // DB 파일 경로
     private static final String DB_URL = "jdbc:sqlite:planner.db";
+    private final Gson gson = new Gson();
 
     public DatabaseService() {
-        // ★ 객체가 생성될 때 테이블을 만듭니다.
         createTables();
     }
 
-    // 1. 테이블 생성 (이 부분이 실행되어야 'no such table' 에러가 안 납니다)
     private void createTables() {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement()) {
 
-            // [1] 사용자 테이블 (로그인용)
+            // [1] 사용자 테이블 (컬럼명 간소화)
             String sqlUser = "CREATE TABLE IF NOT EXISTS users (" +
                     "user_id TEXT PRIMARY KEY, " +
                     "password TEXT NOT NULL, " +
-                    "nickname TEXT)";
-
-            // [2] 하루 요약 (목표 시간)
-            String sqlDaily = "CREATE TABLE IF NOT EXISTS daily_summary (" +
-                    "user_id TEXT, " +
-                    "date TEXT, " +
-                    "daily_goal_seconds INTEGER, " +
-                    "PRIMARY KEY(user_id, date), " +
-                    "FOREIGN KEY(user_id) REFERENCES users(user_id))";
-
-            // [3] 과목별 기록
-            String sqlSubject = "CREATE TABLE IF NOT EXISTS subject_log (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "user_id TEXT, " +
-                    "date TEXT, " +
-                    "subject_name TEXT, " +
-                    "studied_seconds INTEGER, " +
-                    "color TEXT, " +
-                    "content TEXT, " +
-                    "is_done INTEGER, " +
-                    "FOREIGN KEY(user_id) REFERENCES users(user_id))";
-
-            // [4] 공부 세션 (형광펜)
-            String sqlSession = "CREATE TABLE IF NOT EXISTS study_sessions (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "user_id TEXT, " +
-                    "date TEXT, " +
-                    "subject_name TEXT, " +
-                    "start_time TEXT, " +
-                    "end_time TEXT, " +
-                    "duration INTEGER, " +
-                    "FOREIGN KEY(user_id) REFERENCES users(user_id))";
-
-            // 테이블 생성 실행
+                    "nickname TEXT, " +
+                    "planner_date TEXT, " +       // 플래너 씨앗 받은 날짜
+                    "timer_date TEXT, " +         // 타이머 씨앗 받은 날짜
+                    "planner_flower_date TEXT, " + // 플래너 꽃 받은 날짜
+                    "timer_flower_date TEXT, " +   // 타이머 꽃 받은 날짜
+                    "planner_seed_id INTEGER DEFAULT 0, " +
+                    "timer_seed_id INTEGER DEFAULT 0, " +
+                    "timer_stage INTEGER DEFAULT 0, " +
+                    "current_percent REAL DEFAULT 0.0" +
+                    ")";
             stmt.execute(sqlUser);
+
+            // [2] 일간 기록
+            String sqlDaily = "CREATE TABLE IF NOT EXISTS daily_records (" +
+                    "user_id TEXT, date TEXT, json_data TEXT, PRIMARY KEY (user_id, date))";
             stmt.execute(sqlDaily);
-            stmt.execute(sqlSubject);
-            stmt.execute(sqlSession);
 
-            System.out.println("✅ DB 테이블 생성 완료");
+            // [3] 인벤토리
+            String sqlInv = "CREATE TABLE IF NOT EXISTS flower_inventory (" +
+                    "user_id TEXT, flower_id INTEGER, seed_qty INTEGER DEFAULT 0, flower_qty INTEGER DEFAULT 0, " +
+                    "is_seed_unlocked INTEGER DEFAULT 0, is_card_unlocked INTEGER DEFAULT 0, PRIMARY KEY (user_id, flower_id))";
+            stmt.execute(sqlInv);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            // [4] 정원
+            String sqlGarden = "CREATE TABLE IF NOT EXISTS garden_layout (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, flower_id INTEGER, pos_x REAL, pos_y REAL)";
+            stmt.execute(sqlGarden);
+
+            System.out.println("✅ DB 테이블 초기화 완료");
+
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // ----------------------------------------------------
-    // [기능 1] 로그인 & 회원가입
-    // ----------------------------------------------------
-
-    public boolean registerUser(String userId, String password, String nickname) {
+    // --- 유저 관리 ---
+    public boolean registerUser(String id, String pw, String nickname) {
         String sql = "INSERT INTO users(user_id, password, nickname) VALUES(?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, userId);
-            pstmt.setString(2, password);
-            pstmt.setString(3, nickname);
+            pstmt.setString(1, id); pstmt.setString(2, pw); pstmt.setString(3, nickname);
             pstmt.executeUpdate();
             return true;
-        } catch (SQLException e) {
-            System.out.println("회원가입 실패: " + e.getMessage());
-            return false;
-        }
+        } catch (SQLException e) { return false; }
     }
 
-    public String loginUser(String userId, String password) {
+    public String loginUser(String id, String pw) {
         String sql = "SELECT nickname FROM users WHERE user_id = ? AND password = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, userId);
-            pstmt.setString(2, password);
+            pstmt.setString(1, id); pstmt.setString(2, pw);
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getString("nickname");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            if (rs.next()) return rs.getString("nickname");
+        } catch (SQLException e) { e.printStackTrace(); }
         return null;
     }
 
-    // ----------------------------------------------------
-    // [기능 2] 데이터 저장 (플래너/타이머)
-    // ----------------------------------------------------
+    // ★ 유저 정보 로드 (매핑 정확하게 확인)
+    public User loadUser(String userId) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getString("user_id"));
+                u.setPassword(rs.getString("password"));
+                u.setNickname(rs.getString("nickname"));
 
-    public void saveDailyRecord(String userId, LocalDate date, DailyRecord record) {
-        String dateStr = date.toString();
+                u.setPlannerDate(rs.getString("planner_date"));
+                u.setTimerDate(rs.getString("timer_date"));
+                u.setPlannerFlowerDate(rs.getString("planner_flower_date"));
+                u.setTimerFlowerDate(rs.getString("timer_flower_date"));
 
-        String insertSummary = "INSERT OR REPLACE INTO daily_summary (user_id, date, daily_goal_seconds) VALUES (?, ?, ?)";
-        String deleteSubjects = "DELETE FROM subject_log WHERE user_id = ? AND date = ?";
-        String insertSubject = "INSERT INTO subject_log (user_id, date, subject_name, studied_seconds, color, content, is_done) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        String deleteSessions = "DELETE FROM study_sessions WHERE user_id = ? AND date = ?";
-        String insertSession = "INSERT INTO study_sessions (user_id, date, subject_name, start_time, end_time, duration) VALUES (?, ?, ?, ?, ?, ?)";
+                u.setPlannerSeedId(rs.getInt("planner_seed_id"));
+                u.setTimerSeedId(rs.getInt("timer_seed_id"));
+                u.setTimerStage(rs.getInt("timer_stage"));
+                u.setCurrentPercent(rs.getDouble("current_percent"));
 
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            conn.setAutoCommit(false);
-
-            // 1. 목표 시간
-            try (PreparedStatement pstmt = conn.prepareStatement(insertSummary)) {
-                pstmt.setString(1, userId);
-                pstmt.setString(2, dateStr);
-                pstmt.setLong(3, record.getDailyGoalSeconds());
-                pstmt.executeUpdate();
+                System.out.println("🔄 DB 로드: P_ID=" + u.getPlannerSeedId() + ", T_ID=" + u.getTimerSeedId());
+                return u;
             }
+        } catch (Exception e) { e.printStackTrace(); }
+        return null;
+    }
 
-            // 2. 과목 기록
-            try (PreparedStatement del = conn.prepareStatement(deleteSubjects);
-                 PreparedStatement ins = conn.prepareStatement(insertSubject)) {
-                del.setString(1, userId);
-                del.setString(2, dateStr);
-                del.executeUpdate();
+    // --- 업데이트 메서드 (컬럼명 주의) ---
+    public void updatePlannerDate(String uid, String d) { updateCol(uid, "planner_date", d); }
+    public void updateTimerDate(String uid, String d) { updateCol(uid, "timer_date", d); }
+    public void updatePlannerFlowerDate(String uid, String d) { updateCol(uid, "planner_flower_date", d); }
+    public void updateTimerFlowerDate(String uid, String d) { updateCol(uid, "timer_flower_date", d); }
 
-                for (Map.Entry<String, SubjectRecord> entry : record.getSubjects().entrySet()) {
-                    SubjectRecord sr = entry.getValue();
-                    ins.setString(1, userId);
-                    ins.setString(2, dateStr);
-                    ins.setString(3, entry.getKey());
-                    ins.setLong(4, sr.getStudiedSeconds());
-                    ins.setString(5, sr.getColorHex());
-                    ins.setString(6, sr.getTaskContent());
-                    ins.setInt(7, sr.isDone() ? 1 : 0);
-                    ins.addBatch();
-                }
-                ins.executeBatch();
-            }
+    public void updatePlannerSeedId(String uid, int id) {
+        System.out.println("💾 DB 저장: 플래너 ID -> " + id);
+        updateCol(uid, "planner_seed_id", id);
+    }
+    public void updateTimerSeedId(String uid, int id) {
+        System.out.println("💾 DB 저장: 타이머 ID -> " + id);
+        updateCol(uid, "timer_seed_id", id);
+    }
+    public void updateTimerStage(String uid, int s) { updateCol(uid, "timer_stage", s); }
+    public void updateCurrentPercent(String uid, double p) { updateCol(uid, "current_percent", p); }
 
-            // 3. 세션 기록
-            try (PreparedStatement del = conn.prepareStatement(deleteSessions);
-                 PreparedStatement ins = conn.prepareStatement(insertSession)) {
-                del.setString(1, userId);
-                del.setString(2, dateStr);
-                del.executeUpdate();
-
-                for (StudySession s : record.getStudySessions()) {
-                    ins.setString(1, userId);
-                    ins.setString(2, dateStr);
-                    ins.setString(3, s.getSubjectName());
-                    ins.setString(4, s.getStartTime());
-                    ins.setString(5, s.getEndTime());
-                    ins.setLong(6, s.getDurationSeconds());
-                    ins.addBatch();
-                }
-                ins.executeBatch();
-            }
-            conn.commit();
+    private void updateCol(String uid, String col, Object val) {
+        String sql = "UPDATE users SET " + col + " = ? WHERE user_id = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setObject(1, val);
+            pstmt.setString(2, uid);
+            pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public DailyRecord loadDailyRecord(String userId, LocalDate date) {
-        DailyRecord record = new DailyRecord();
-        String dateStr = date.toString();
-
-        String sql1 = "SELECT daily_goal_seconds FROM daily_summary WHERE user_id = ? AND date = ?";
-        String sql2 = "SELECT subject_name, studied_seconds, color, content, is_done FROM subject_log WHERE user_id = ? AND date = ?";
-        String sql3 = "SELECT subject_name, start_time, end_time, duration FROM study_sessions WHERE user_id = ? AND date = ?";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            try (PreparedStatement pstmt = conn.prepareStatement(sql1)) {
-                pstmt.setString(1, userId);
-                pstmt.setString(2, dateStr);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) record.setDailyGoalSeconds(rs.getLong(1));
-            }
-            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-                pstmt.setString(1, userId);
-                pstmt.setString(2, dateStr);
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    String name = rs.getString("subject_name");
-                    long sec = rs.getLong("studied_seconds");
-                    String color = rs.getString("color");
-                    String content = rs.getString("content");
-                    boolean done = rs.getInt("is_done") == 1;
-                    record.getSubjects().put(name, new SubjectRecord(sec, color, content, done));
-                }
-            }
-            try (PreparedStatement pstmt = conn.prepareStatement(sql3)) {
-                pstmt.setString(1, userId);
-                pstmt.setString(2, dateStr);
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    try {
-                        record.addSession(new StudySession(
-                                rs.getString("subject_name"),
-                                LocalTime.parse(rs.getString("start_time")),
-                                LocalTime.parse(rs.getString("end_time")),
-                                rs.getLong("duration")
-                        ));
-                    } catch (Exception e) {}
-                }
-            }
+    // --- Daily & Inventory (기존 유지) ---
+    public void saveDailyRecord(String uid, LocalDate d, DailyRecord r) {
+        String sql = "INSERT OR REPLACE INTO daily_records (user_id, date, json_data) VALUES (?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, uid); ps.setString(2, d.toString()); ps.setString(3, gson.toJson(r));
+            ps.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
-        return record;
+    }
+    public DailyRecord loadDailyRecord(String uid, LocalDate d) {
+        String sql = "SELECT json_data FROM daily_records WHERE user_id = ? AND date = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, uid); ps.setString(2, d.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return gson.fromJson(rs.getString("json_data"), DailyRecord.class);
+        } catch (SQLException e) { e.printStackTrace(); }
+        return new DailyRecord();
+    }
+    public void initFlowerInventory(String uid) {
+        String sql = "INSERT OR IGNORE INTO flower_inventory(user_id, flower_id) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                for (int i = 1; i <= 15; i++) { ps.setString(1, uid); ps.setInt(2, i); ps.addBatch(); }
+                ps.executeBatch();
+            }
+            conn.commit();
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 }

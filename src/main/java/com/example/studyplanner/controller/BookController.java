@@ -16,7 +16,7 @@ public class BookController {
     public void initialize() {
         // 정원 화면 초기화 (테이블 코드 없음!)
     }
-
+// 푸시푸시
     // 네비게이션
     @FXML void navGarden(ActionEvent event) { switchScene(event, "garden-view.fxml"); }
     @FXML void navPlanner(ActionEvent event) { switchScene(event, "planner-view.fxml"); }
