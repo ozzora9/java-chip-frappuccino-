@@ -1,3 +1,11 @@
+@font-face {
+    src: url("/fonts/neodgm.ttf");
+}
+
+.root {
+    -fx-font-family: "NeoDunggeunmo";
+}
+
 .page { -fx-background-color: #EEFFCC; }
 
 .content { -fx-padding: 18; }
@@ -26,7 +34,7 @@
 
 /* 텍스트 스타일 */
 .section-title { -fx-font-size: 15px; -fx-font-weight: bold; }
-.timer-big { -fx-font-size: 24px; -fx-font-family: 'Georgia'; -fx-text-fill: #5c3a21; }
+.timer-big { -fx-font-size: 24px; -fx-text-fill: #5c3a21; }
 .hint { -fx-text-fill: #9a9a9a; -fx-font-size: 11px; }
 .dday { -fx-text-fill: #7a7a7a; -fx-font-size: 14px; }
 .rate { -fx-text-fill: #6A8DFF; -fx-font-weight: bold; }
@@ -54,8 +62,6 @@
     -fx-text-fill: #333333;
 }
 
-/* 전체 폰트 */
-.root { -fx-font-family: 'Segoe UI', sans-serif; }
 
 /* ============================
    Pixel Tab (상단 탭 버튼)
@@ -74,7 +80,6 @@
     -fx-text-fill: #5c3a21;
     -fx-font-weight: bold;
     -fx-font-size: 11px;
-    -fx-font-family: 'Georgia', serif;
 }
 /* 제목 라벨 스타일 (Study Plan, Focus Timer) */
 .header-label {
@@ -134,7 +139,6 @@
     -fx-text-fill: #3e2723; /* 진한 갈색 글자 */
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-font-family: "Georgia";
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5, 0, 0, 3);
     -fx-border-color: #8d6e63;
@@ -179,7 +183,6 @@
 .date-picker > .text-field {
     -fx-background-color: transparent;
     -fx-text-fill: #5c3a21;
-    -fx-font-family: 'Georgia';
     -fx-font-weight: bold;
 }
 .date-picker > .arrow-button {
@@ -241,7 +244,6 @@
     -fx-alignment: center;
     -fx-padding:7;
     -fx-font-size: 11px;
-    -fx-font-family: 'Georgia';
     -fx-text-fill: #5c3a21;
     -fx-border-width: 0; /* 선 없음 */
 }
@@ -265,20 +267,17 @@
 .cell-grid-normal {
     -fx-border-color: #b08d74;
     -fx-border-width: 0 1 1 0;
-    -fx-border-style: segments(3, 3); /* 점선 */
 }
 /* B-2. [중간 모눈 - 맨 아래] 바닥 선 없음 */
 .cell-grid-bottom {
     -fx-border-color: #b08d74;
     -fx-border-width: 0 1 0 0; /* 아래(0) */
-    -fx-border-style: segments(3, 3);
 }
 
 /* C. [오른쪽 끝 모눈] 오른쪽 선 없음, 아래(점선) */
 .cell-grid-end {
     -fx-border-color: #b08d74;
     -fx-border-width: 0 0 1 0; /* 오른쪽(0) */
-    -fx-border-style: segments(3, 3);
 }
 /* C-2. [오른쪽 끝 모눈 - 맨 아래] 선 없음 (구석) */
 .cell-grid-corner {
@@ -468,7 +467,6 @@
 .paper-date-picker > .text-field {
     -fx-background-color: transparent;
     -fx-text-fill: #333333;
-    -fx-font-family: 'Segoe UI', sans-serif;
     -fx-font-size: 12px;
     -fx-padding: 0 5 0 0; /* 텍스트 위치 조정 */
 }
@@ -622,14 +620,12 @@
    [오른쪽] 타이머 텍스트
    ============================== */
 .timer-text-large {
-    -fx-font-family: "Courier New", monospace;
     -fx-font-size: 32px; /* [수정됨] 38px -> 32px */
     -fx-font-weight: bold;
     -fx-text-fill: #3e2723;
 }
 
 .timer-text-small {
-    -fx-font-family: "Georgia", serif;
     -fx-font-size: 14px;
     -fx-text-fill: #6d4c41;
 }
@@ -642,7 +638,6 @@
 .dday-setting-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #8d6e63;  /* 연한 갈색 */
-    -fx-font-family: 'Segoe UI', sans-serif;
     -fx-font-size: 11px;
     -fx-cursor: hand;
     -fx-padding: 2 5 2 5;
@@ -655,7 +650,6 @@
 
 /* 2. D-Day 결과 텍스트 (강렬하게) */
 .dday-result-text {
-    -fx-font-family: 'Georgia';
     -fx-font-weight: bold;
     -fx-text-fill: #ff5555; /* 붉은색 강조 */
     -fx-font-size: 18px;    /* 크기 키움 */
@@ -682,7 +676,6 @@
 }
 
 .dialog-pane .header-panel .label {
-    -fx-font-family: 'Georgia';
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #5c3a21; /* 진한 갈색 글씨 */
@@ -693,7 +686,6 @@
     -fx-padding: 20;
 }
 .dialog-pane .content .label {
-    -fx-font-family: 'Segoe UI';
     -fx-font-size: 13px;
     -fx-text-fill: #6d4c41;
 }
@@ -706,7 +698,6 @@
     -fx-background-radius: 5;
     -fx-padding: 5;
     -fx-text-fill: #3e2723;
-    -fx-font-family: 'Segoe UI';
 }
 .dialog-pane .text-field:focused {
     -fx-border-color: #d4af37; /* 포커스 시 금색 테두리 */
@@ -717,7 +708,6 @@
 .dialog-pane .button-bar .button {
     -fx-background-color: #b08d74;
     -fx-text-fill: white;
-    -fx-font-family: 'Georgia';
     -fx-font-weight: bold;
     -fx-background-radius: 5;
     -fx-cursor: hand;
@@ -750,7 +740,6 @@
 .book-combo-box .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: #5c3a21;
-    -fx-font-family: 'Segoe UI';
 }
 .book-combo-box .list-cell:hover {
     -fx-background-color: #e0c3a8; /* 마우스 올리면 */
@@ -800,7 +789,6 @@
 
 /* 보관함 제목 라벨 */
 .inventory-title {
-    -fx-font-family: 'Georgia';
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #5c3a21;
@@ -828,7 +816,6 @@
 
 /* 꽃 이름 라벨 */
 .flower-name {
-    -fx-font-family: 'Segoe UI';
     -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-text-fill: #3e2723;
